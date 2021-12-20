@@ -1,0 +1,73 @@
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head th:fragment="html_head" id="html_head">
+	<meta charset="ISO-8859-1">
+	<title>Leave Application Processing System - LAPS</title>
+	<link rel="stylesheet" th:href="@{/css/simple.css}" />
+</head>
+
+<body>
+	<div th:fragment="menu" id="menu">
+		<!-- Navigation -->
+		<nav class="navbar">
+			<a th:href="@{/home}">Leave Application
+				Processing System - LAPS</a>
+			<a th:href="@{/home}">Home</a>
+			<div th:if="${session.validated != null}">
+				<div th:if="${session.admvalidated == null }" th:each="role : ${session.validated.roles}">
+					<div th:if="${role.name == 'Manager'}">
+						<div class="subnav">
+							<button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
+							<div class="subnav-content">
+								<a th:href="@{/manager/pending}" th:utext="#{menu.leaveForApproval}">Pending
+									Approvals</a>
+								<a th:href="@{/manager/shistory}" th:utext="#{menu.leavehistory}">Subordinate
+									History</a>
+							</div>
+						</div>
+					</div>
+					<div th:if="${role.name == 'Employee'}">
+						<div class="subnav">
+							<button class="subnavbtn">Employee Menu <i class="fa fa-caret-down"></i></button>
+							<div class="subnav-content">
+								<a th:href="@{/staff/history}" th:utext="#{menu.empHistory}">Leave History</a>
+								<a th:href="@{/staff/course/create}" th:utext="#{menu.empApply}">Apply Leave</a>
+								<a th:href="@{/staff/logout}" th:utext="#{menu.empCompensation}">Claim Compensation</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<div th:if="${session.admvalidated != null}">
+				<div class="subnav">
+					<button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
+					<div class="subnav-content">
+						<a th:href="@{/manager/pending}" th:utext="#{menu.adminManageStaff}">Manage Staff</a>
+						<a th:href="@{/manager/shistory}" th:utext="#{menu.adminLeaveEntitlement}">Manage Leave
+							Entitlement</a>
+						<a th:href="@{/manager/pending}" th:utext="#{menu.adminLeaveType}">Manage Leave Type</a>
+					</div>
+				</div>
+			</div>
+			<div th:if="${session.admvalidated != null} or ${session.validated != null}">
+				<div class="subnav">
+					<button class="subnavbtn">Logout Menu <i class="fa fa-caret-down"></i></button>
+					<div class="subnav-content">
+						<a th:href="@{/logout}" th:utext="#{menu.logout}">Logout</a>
+					</div>
+				</div>
+			</div>
+		</nav>
+	</div>
+	<div th:fragment="header" id="header">
+		<div th:if="${session.validated != null}">
+			<h2><em th:utext="'Hello '+ ${session.validated.name}"></em></h2>
+		</div>
+		<div th:if="${session.admvalidated != null}">
+			<h2><em th:utext="'Hello '+ ${session.admvalidated.name}"></em></h2>
+		</div>
+	</div>
+
+</body>
+
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h2>Employee Leave History</h2>
+	<div th:if="${not #lists.isEmpty(lhistory)}">
+		<table style=" border: 1;">
+			<tr class="listHeading">
+				<th><span th:text="#{fieldLabel.reference}"></span></th>
+				<th><span th:text="#{fieldLabel.type}"></span></th>
+				<th><span th:text="#{fieldLabel.startDate}"></span></th>
+				<th><span th:text="#{fieldLabel.endDate}"></span></th>
+				<th><span th:text="#{fieldLabel.status}"></span></th>
+				<th><span th:text="#{fieldLabel.update}"></span></th>
+				<th><span th:text="#{fieldLabel.delete}"></span></th>
+			</tr>
+			<tr th:each="leave : ${lhistory}" class="listRecord">
+				<td align="left" th:text="${leave.leaveAppId}">Id</td>
+				<td align="left" th:text="${leave.type}">Id</td>
+				<td align="left" th:text="${#dates.format(leave.fromDate, 'dd/MM/yyyy')}">From</td>
+				<td align="left" th:text="${#dates.format(leave.toDate, 'dd/MM/yyyy')}">To</td>
+				<td align="left" th:text="${leave.status}">Status</td>
+
+				<td>
+					<div
+						th:if="${#strings.equals(leave.status, 'APPLIED')  or #strings.equals(leave.status,'UPDATED')}">
+						<a th:href="@{/employee/leave/edit/}+${leave.leaveAppId}">Update</a>
+					</div>
+				</td>
+				<td>
+					<div
+						th:if="${#strings.equals(leave.status, 'APPLIED')  or #strings.equals(leave.status,'UPDATED')}">
+						<a th:href="@{/employee/leave/delete/}+${leave.leaveAppId}">Delete</a>
+					</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+</body>
+
+</html>
