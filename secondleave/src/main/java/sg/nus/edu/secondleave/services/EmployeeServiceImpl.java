@@ -47,7 +47,11 @@ public class EmployeeServiceImpl implements EmployeeService {
 		return employeeRepo.save(emp);
 	}
 
+
+	@Override
+	@Transactional
+	public Employee editEmp(Employee emp) {
+		return employeeRepo.save(emp);
+	}
 	
-
-
 }

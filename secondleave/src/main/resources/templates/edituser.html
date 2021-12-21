@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h3>Edit User page</h3>
+	<form action="#" th:action="@{/admin/edituser/}+${user.employeeId}" th:object="${user}" method="post">
+		<table>
+			<tbody>
+				<tr>
+					<td><span th:text="#{fieldLabel.employeeId}"></span></td>
+					<td><input type="text" th:field="*{employeeId}" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{fieldLabel.empName}"></span></td>
+					<td><input type="text" th:field="*{name}" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{fieldLabel.username}"></span></td>
+					<td><input type="text" th:field="*{username}" /></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{fieldLabel.password}"></span></td>
+					<td><input type="text" th:field="*{password}" /></td>
+				<tr>
+					<td><label>User roles (multiple select):</label></td>
+					<td><select size="03" multiple="multiple" name="roleSet" id="roleSet">
+							<option th:each="role:${roles}" th:value="${role.roleId}" th:text="${role.description}">
+								Roles</option>
+						</select></td>
+				</tr>
+
+				<tr>
+					<td><input type="submit" value="Update" /></td>
+					<td></td>
+					<td></td>
+				</tr>
+			</tbody>
+		</table>
+	</form>
+</body>
+
+</html>
