@@ -19,7 +19,7 @@ public class EmployeeController {
 			if(emp.getLeaves().size()>=0) {
 				model.addAttribute("lhistory", emp.getLeaves());
 			}
-			return "staffhistory";	
+			return "employeedashboard";	
 		}
 		
 		return "forward:/home";
