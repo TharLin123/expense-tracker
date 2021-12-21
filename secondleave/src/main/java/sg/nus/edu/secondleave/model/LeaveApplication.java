@@ -27,7 +27,7 @@ import sg.nus.edu.secondleave.util.TypeEnum;
 public class LeaveApplication {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer leaveAppId;
 	
 	@Enumerated(EnumType.STRING)

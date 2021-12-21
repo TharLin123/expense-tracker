@@ -28,16 +28,12 @@
 					<tr>
 						<td>Staff's Role':</td>
 						<td>
-							<select name="chooserole" id="chooserole">
-								<option th:each="role:${rolelist}" th:value="${role.name}"
-									th:text="${role.name}"
-									th:selected="${role.name == Administrator}">
+							<select size="03" multiple="multiple" name="roles" id="roles">
+								<option th:each="role:${rolelist}" th:value="${role.roleId}"
+									th:text="${role.name}">
 								</option>
 							</select>
 						</td>
-					</tr>
-					<tr>	
-						<td><input type="hidden" th:field="*{employeeId}"></td>
 					</tr>
 				</tbody>
 			</table>
@@ -45,7 +41,7 @@
 
 		</form>
 		<br>
-		<a th:href="@{/admin/staff}">Back to main</a>
+		<a th:href="@{/admin/history}">Back to main</a>
 	</div>
 
 </body>

@@ -1,8 +1,8 @@
 package sg.nus.edu.secondleave.controllers;
 
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.List;
-import java.util.Set;
 
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.Role;
@@ -56,21 +55,24 @@ public class AdminUserController {
 	}
 
 	@PostMapping("/admin/create")
-	public String saveUser(@ModelAttribute @Valid Employee user, BindingResult bindingResult, Model model,@RequestParam("chooserole") String rolename 
+	public String saveUser(@ModelAttribute("user") @Valid Employee user, BindingResult bindingResult, Model model
 			) {
+		HashSet<Role> newRoleSet = new HashSet<Role>();
 		if (bindingResult.hasErrors()) {
-			List<Role> e = roleRepo.findAll();
+			
 			return "adduser";
 		}
-		System.out.println(user.getName());
-		System.out.println(rolename);
-		Role choice = roleRepo.findByName(rolename);
-		Set<Role> rolechoice = new HashSet<>();
-		rolechoice.add(choice);
-		user.setRoles(rolechoice);		
+		
+		for (Iterator<Role> iterator = user.getRoles().iterator(); iterator.hasNext();) {
+			Role type = (Role) iterator.next();
+			Role newRole = roleRepo.findRole(type.getRoleId());
+			newRoleSet.add(newRole);
+			//System.out.println("Role: "+type.toString());
+		}
+		
+		user.setRoles(newRoleSet);		
 		empRepo.save(user);
 		
-		return "redirect:/adminlogin";
+		return "redirect:/admin/history";
 	}
-
 }
