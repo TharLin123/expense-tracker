@@ -60,13 +60,13 @@ public class LoginController {
 			,BindingResult bindingResult, Model model, HttpSession session) {
 
 		if(bindingResult.hasErrors()) {
-			return "login";
+			return "adminloginfail";
 		} else {
 			Employee emp = eService.authenticate(user.getUsername(),user.getPassword());
 			
 			if(emp == null || !emp.getRoles().stream()
 					.anyMatch(x->x.getName().equals("Administrator"))) {
-				return "loginfail";
+				return "adminloginfail";
 			} 
 					
 			session.setAttribute("admvalidated", emp);
