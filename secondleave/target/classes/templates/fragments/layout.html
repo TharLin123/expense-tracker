@@ -51,10 +51,10 @@
 			</div>
 			<div th:if="${session.admvalidated != null} or ${session.validated != null}">
 				<div class="subnav">
-					<button class="subnavbtn">Logout Menu <i class="fa fa-caret-down"></i></button>
-					<div class="subnav-content">
+					<a class="subnavbtn" th:href="@{/logout}" th:utext="#{menu.logout}"></a >
+					<!--<div class="subnav-content">
 						<a th:href="@{/logout}" th:utext="#{menu.logout}">Logout</a>
-					</div>
+					</div>-->
 				</div>
 			</div>
 		</nav>
