@@ -13,13 +13,16 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.servlet.ModelAndView;
 
 import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.Role;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
 import sg.nus.edu.secondleave.repo.RoleRepository;
+import sg.nus.edu.secondleave.services.EmployeeService;
 
 @Controller
 public class AdminUserController {
@@ -29,6 +32,8 @@ public class AdminUserController {
 	EmployeeRepository empRepo;
 	@Autowired
 	RoleRepository roleRepo;
+	@Autowired
+	EmployeeService empServ;
 	
 
 	@RequestMapping(value = "/admin/history")
@@ -73,6 +78,30 @@ public class AdminUserController {
 		user.setRoles(newRoleSet);		
 		empRepo.save(user);
 		
-		return "redirect:/admin/history";
+		return "redirect:/admin/list";
 	}
+	
+	/* List Users */
+	@GetMapping("/admin/list")
+	public ModelAndView employeeList() {
+		ModelAndView mav = new ModelAndView("emplist");
+		List<Employee> empList = empServ.findAllEmployees();
+		mav.addObject("empList", empList);
+		return mav;
+	}
+	
+	/* Delete Users */
+	@RequestMapping("/admin/delete/{id}")
+	public ModelAndView deleteEmployee(@PathVariable String id) {
+		ModelAndView mav = new ModelAndView("forward:/admin/list");
+
+		Employee employee = empServ.findEmpById(Integer.parseInt(id));
+		empServ.removeUser(employee);
+		System.out.println("Employee delete");
+		return mav;
+
+	}
+	
+	
+	
 }
