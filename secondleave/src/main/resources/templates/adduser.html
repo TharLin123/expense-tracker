@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://thymeleaf.org">
+
+<head>
+	<meta charset="UTF-8">
+	<title>Add a new Staff</title>
+</head>
+
+<body>
+	<div align="center">
+		<h1>New Staff Form</h1>
+
+		<form th:object="${user}" th:action="@{/admin/create}" method="post">
+			<table>
+				<tbody>
+					<tr>
+						<td>Staff's Name:</td>
+						<td><input type="text" th:field="*{name}" /></td>
+					</tr>
+					<tr>
+						<td>Username:</td>
+						<td><input type="text" th:field="*{username}" /></td>
+					</tr>
+					<tr>
+						<td>Initial Password: </td>
+						<td><input type="text" th:field="*{password}" /></td>
+					</tr>
+					<tr>
+						<td>Staff's Role':</td>
+						<td>
+							<select name="chooserole" id="chooserole">
+								<option th:each="role:${rolelist}" th:value="${role.name}"
+									th:text="${role.name}"
+									th:selected="${role.name == Administrator}">
+								</option>
+							</select>
+						</td>
+					</tr>
+					<tr>	
+						<td><input type="hidden" th:field="*{employeeId}"></td>
+					</tr>
+				</tbody>
+			</table>
+			<a><input type="submit" value="Create" class="bclass" /></a>
+
+		</form>
+		<br>
+		<a th:href="@{/admin/staff}">Back to main</a>
+	</div>
+
+</body>
+
+</html>
