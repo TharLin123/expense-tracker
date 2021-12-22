@@ -9,16 +9,17 @@
 	<div th:replace="fragments/layout.html :: menu" />
 	<div th:replace="fragments/layout.html :: header" />
 	<h3>User List page</h3>
-	<a th:href="@{/admin/create}">Add User</a>
 	<div th:if="${not #lists.isEmpty(empList)}">
 
-		<table style="border: 1;">
+		<table style="border: 1;margin-left: auto; margin-right: auto;">
 			<thead>
-				<tr class="listHeading">
+				<tr class="listHeading">					
+					<th><span th:text="#{fieldLabel.employeeId}"></span></th>
 					<th><span th:text="#{fieldLabel.empName}"></span></th>
 					<th><span th:text="#{fieldLabel.username}"></span></th>
 					<th><span th:text="#{fieldLabel.password}"></span></th>
-					<th><span th:text="#{fieldLabel.employeeId}"></span></th>
+
+					<th><span th:text="#{fieldLabel.managerid}"></span></th>					
 					<th><span th:text="#{fieldLabel.edit}"></span></th>
 					<th><span th:text="#{fieldLabel.delete}"></span></th>
 				</tr>
@@ -26,11 +27,11 @@
 			<tbody>
 
 				<tr th:each="emp : ${empList}" class="listRecord">
-					<td th:text="${emp.name}">Id</td>
-					<td th:text="${emp.username}">Name</td>
-					<td th:text="${emp.password}">Password</td>
 					<td th:text="${emp.employeeId}">Employee Id</td>
-					
+					<td th:text="${emp.name}">Employee's name</td>
+					<td th:text="${emp.username}">UserName</td>
+					<td th:text="${emp.password}">Password</td>
+					<td th:text="${emp.managerId}">Manager Id</td>
 					<td><a th:href="@{/admin/edit/}+${emp.employeeId}" class="btn btn-default"><span
 								th:text="#{fieldLabel.edit}"></span></a></td>
 					<td><a th:href="@{/admin/delete/}+${emp.employeeId}" class="btn btn-default"><span
@@ -39,4 +40,8 @@
 			</tbody>
 		</table>
 	</div>
+	<div style ="text-align:center">
+		</br></br>
+		<a th:href="@{/admin/create}" style="font-size:15px">Add User</a >
+	</div >
 </body>
