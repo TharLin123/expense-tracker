@@ -50,18 +50,18 @@ public class LeaveApplicationController {
 	public void approveLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
 		leaveApp.get().setStatus(LeaveEnum.APPROVED);
-		comment.setLeaves(leaveApp);
+		comment.setLeave(leaveApp);
 		System.out.println(comment.getMessage());
-		System.out.println(comment.getLeaves().get().getStatus());
+		System.out.println(comment.getLeave().get().getStatus());
 	}
 	
 	@PostMapping("/reject/{id}")
 	public void rejectLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
 		leaveApp.get().setStatus(LeaveEnum.REJECTED);
-		comment.setLeaves(leaveApp);
+		comment.setLeave(leaveApp);
 		System.out.println(comment.getMessage());
-		System.out.println(comment.getLeaves().get().getStatus());
+		System.out.println(comment.getLeave().get().getStatus());
 	}
 	
 //	Mock Data
