@@ -22,7 +22,7 @@ public class Comment {
 	private Integer CommentId;
 	
 	@OneToOne(targetEntity = LeaveApplication.class)
-	private Optional<LeaveApplication> leave;
+	private LeaveApplication leave;
 
 	private String message;
 
@@ -37,12 +37,12 @@ public class Comment {
 		CommentId = commentId;
 	}
 
-	public Optional<LeaveApplication> getLeave() {
+	public LeaveApplication getLeave() {
 		return leave;
 	}
 
-	public void setLeave(Optional<LeaveApplication> leave) {
-		this.leave = leave;
+	public void setLeave(LeaveApplication leaveApplication) {
+		this.leave = leaveApplication;
 	}
 
 	public String getMessage() {

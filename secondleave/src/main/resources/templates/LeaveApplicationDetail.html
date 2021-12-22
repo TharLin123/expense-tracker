@@ -12,16 +12,19 @@
 		<strong>Leave Type: </strong> <span th:text="${leave.type}" /><br/>
 		<strong>From : </strong> <span th:text="${leave.fromDate}" /><br/>
 		<strong>To: </strong> <span th:text="${leave.toDate}" /><br/>
+		<strong>Contact Detail: </strong> <span th:text="${leave.contactDetails}" /><br/>
+		<strong>Work Dissemination: </strong> <span th:text="${leave.workDissemination}" /><br/>
 		<strong>Reason: </strong> <span th:text="${leave.reason}" /><br/>
 		
+	<h3>Approve/Reject Leave</h3>
  	<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
         <p>Comment:</p>
-         	<textarea type="text" th:field="*{message}" ></textarea><br/> 
+         	<textarea type="text" th:field="*{message}" required></textarea><br/> 
          	
-         	<input type="radio" name="approve" value="approved" th:field="*{decision}">
+         	<input type="radio" name="approve" value="approved" th:field="*{decision}" required>
             <label for="approve">Approve</label>
             
-            <input type="radio" name="reject"  value="rejected" th:field="*{decision}">
+            <input type="radio" name="reject"  value="rejected" th:field="*{decision}" required>
             <label for="reject">Reject</label>
             
         	<input type="submit" value="Submit" />

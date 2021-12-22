@@ -30,7 +30,7 @@ public class LeaveApplicationController {
 	@Autowired
 	CommentService commentService;
 
-	@GetMapping("/view")
+	@RequestMapping("/view")
 	public String viewLeaveApp(Model model) {
 		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
 		model.addAttribute("leaves",leaveApps);
@@ -53,15 +53,14 @@ public class LeaveApplicationController {
 		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
 		model.addAttribute("leaves",leaveApps);
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
-		comment.setLeave(leaveApp);
+		comment.setLeave(leaveApp.get());
 
 		if(comment.getDecision().equals("approved")) {
-			
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
 		} else {
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
 		}
-//		commentService.saveComment(comment);
-		return "LeaveApplicationView";
+		commentService.saveComment(comment);
+		return "redirect:/leaves/view";
 	}
 }
