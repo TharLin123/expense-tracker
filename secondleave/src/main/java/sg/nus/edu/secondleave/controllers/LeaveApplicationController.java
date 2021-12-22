@@ -49,17 +49,19 @@ public class LeaveApplicationController {
 	}
 	
 	@PostMapping("/decide/{id}")
-	public String approveLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
+	public String approveLeaveApp(Model model,@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
+		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
+		model.addAttribute("leaves",leaveApps);
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
 		comment.setLeave(leaveApp);
-		commentService.saveComment(comment);
-		
+
 		if(comment.getDecision().equals("approved")) {
+			
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
 		} else {
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
 		}
+//		commentService.saveComment(comment);
 		return "LeaveApplicationView";
 	}
-
 }
