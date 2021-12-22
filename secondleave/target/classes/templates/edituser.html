@@ -10,7 +10,7 @@
 	<div th:replace="fragments/layout.html :: header" />
 	<h3>Edit User page</h3>
 	<form action="#" th:action="@{/admin/edituser/}+${user.employeeId}" th:object="${user}" method="post">
-		<table>
+		<table style="border: 1;margin-left: auto; margin-right: auto;">
 			<tbody>
 				<tr>
 					<td><span th:text="#{fieldLabel.employeeId}"></span></td>
@@ -27,6 +27,7 @@
 				<tr>
 					<td><span th:text="#{fieldLabel.password}"></span></td>
 					<td><input type="text" th:field="*{password}" /></td>
+				</tr>
 				<tr>
 					<td><label>User roles (multiple select):</label></td>
 					<td><select size="03" multiple="multiple" name="roleSet" id="roleSet">
@@ -34,15 +35,25 @@
 								Roles</option>
 						</select></td>
 				</tr>
-
+				<tr>
+					<td><label>Select Manager :</label></td>
+					<td><select size="03" name="manager" id="manager">
+							<option th:each="manager:${managerlist}" th:value="${manager.employeeId}"
+								th:text="${manager.name}">
+								Managers</option>
+						</select></td>
+				</tr>
 				<tr>
 					<td><input type="submit" value="Update" /></td>
-					<td></td>
-					<td></td>
 				</tr>
-			</tbody>
-		</table>
+			</tbody>			
+		</table >
+
 	</form>
+	<div style="text-align: center;">
+						<br><br>
+					<a th:href="@{/admin/list}" style="font-size: 15px">Back to list</a>
+	</div >
 </body>
 
 </html>

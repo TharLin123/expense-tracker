@@ -9,7 +9,9 @@ public interface EmployeeService {
 	
 	public void removeUser(Employee emp);
 	public List<Employee> findAllEmployees();
+	public List<Employee> findAllManager();
 	public Employee findEmpById(int employeeId);
 	public Employee createEmp(Employee emp);
 	public Employee editEmp(Employee emp);
+
 }

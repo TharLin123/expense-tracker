@@ -1,5 +1,9 @@
 package sg.nus.edu.secondleave.services;
 
-public interface RoleService {
+import java.util.List;
 
+import sg.nus.edu.secondleave.model.Role;
+
+public interface RoleService {
+	public List<Role> findAll();
 }
