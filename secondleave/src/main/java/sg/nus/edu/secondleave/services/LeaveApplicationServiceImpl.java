@@ -2,6 +2,8 @@ package sg.nus.edu.secondleave.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +14,7 @@ import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
 import sg.nus.edu.secondleave.repo.LeaveApplicationRepository;
+import sg.nus.edu.secondleave.util.TypeEnum;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService {
@@ -44,5 +47,14 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	@Transactional
 	public void saveLeaveApplication(LeaveApplication leaveApp) {
 		leaveAppRepo.save(leaveApp);
+	}
+	
+	@Override
+	public List<String> findAllLeaveType() {
+		// Use this to fetch all enum leave type as list<String>
+		List<String> leaveTypes = Stream.of(TypeEnum.values())
+									.map(TypeEnum::getValue)
+									.collect(Collectors.toList());
+		return leaveTypes;
 	}
 }

@@ -15,4 +15,8 @@ public interface LeaveApplicationService {
 	public Optional<Employee> getEmployee(int id);
 
 	void saveLeaveApplication(LeaveApplication leaveApp);
+	
+	// this one is for fetching all enum leaveType 
+	//& return a String list to show as select list in pages; 
+	public List<String> findAllLeaveType();
 }
