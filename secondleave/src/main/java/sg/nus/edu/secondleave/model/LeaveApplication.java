@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotEmpty;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,17 +34,30 @@ public class LeaveApplication {
 	@Enumerated(EnumType.STRING)
 	private TypeEnum type;
 	
+	@NotEmpty
 	@Temporal(TemporalType.DATE)
 	@Column(name = "fromdate")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date fromDate;
+	
+	@NotEmpty
 	@Temporal(TemporalType.DATE)
 	@Column(name = "todate")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private Date toDate;
+	
 	@Enumerated(EnumType.STRING)
 	private LeaveEnum status;
+	
+	@NotEmpty
+	private String reason;
+	
+	private String workDissemination;
+	
+	private String contactDetails;
+	
 	@ManyToOne
 	private Employee employee;
+	
 }
 
