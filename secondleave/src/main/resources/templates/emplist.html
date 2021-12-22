@@ -31,7 +31,7 @@
 					<td th:text="${emp.password}">Password</td>
 					<td th:text="${emp.employeeId}">Employee Id</td>
 					
-					<td><a th:href="@{/admin/delete/}+${emp.employeeId}" class="btn btn-default"><span
+					<td><a th:href="@{/admin/edit/}+${emp.employeeId}" class="btn btn-default"><span
 								th:text="#{fieldLabel.edit}"></span></a></td>
 					<td><a th:href="@{/admin/delete/}+${emp.employeeId}" class="btn btn-default"><span
 								th:text="#{fieldLabel.delete}"></span></a></td>

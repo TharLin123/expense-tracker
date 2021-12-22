@@ -2,11 +2,14 @@
 <html xmlns:th="http://thymeleaf.org">
 
 <head>
+	<head th:replace="fragments/layout.html :: html_head" />
 	<meta charset="UTF-8">
 	<title>Add a new Staff</title>
 </head>
 
 <body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
 	<div align="center">
 		<h1>New Staff Form</h1>
 
