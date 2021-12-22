@@ -112,10 +112,9 @@ ul li a:visited {
 table
 {
 	font-family: "Lucida Sans Unicode", "Lucida Grande", Sans-Serif;
-	font-size: 12px;
+	font-size: 15px;
 	background: #fff;
-	border-collapse: collapse;
-	
+	border-collapse: collapse;	
 }
 th
 {

@@ -1,6 +1,5 @@
 package sg.nus.edu.secondleave.controllers;
 
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import sg.nus.edu.secondleave.model.Employee;
@@ -25,6 +25,7 @@ import sg.nus.edu.secondleave.model.Role;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
 import sg.nus.edu.secondleave.repo.RoleRepository;
 import sg.nus.edu.secondleave.services.EmployeeService;
+import sg.nus.edu.secondleave.services.RoleService;
 
 @Controller
 public class AdminUserController {
@@ -35,6 +36,8 @@ public class AdminUserController {
 	RoleRepository roleRepo;
 	@Autowired
 	EmployeeService empServ;
+	@Autowired
+	RoleService roleServ;
 
 	@RequestMapping(value = "/admin/history")
 	public String adminpage(HttpSession session, Model model) {
@@ -43,25 +46,28 @@ public class AdminUserController {
 			System.out.println(emp.getName());
 			return "staffhistory";
 		}
-
 		return "forward:/home";
 	}
-
 	@GetMapping("/admin/create")
 	public String createUser(Model model) {
 		model.addAttribute("user", new Employee());
-		List<Role> e = roleRepo.findAll();
-		for (Role E : e) {
-			System.out.println(E.toString());
+		List<Employee> managerList = empServ.findAllManager();
+		List<Role> roleList = roleServ.findAll();
+		// for testing purposes can remove
+		/*for(Employee E : managerList) {
+			System.out.println(E.getName());
 		}
-
-		model.addAttribute("rolelist", e);
+		for (Role E : roleList) {
+			System.out.println(E.toString());
+		} */
+		model.addAttribute("managerlist",managerList);
+		model.addAttribute("rolelist", roleList);
 		return "adduser";
 	}
 
 	/* Create User */
 	@PostMapping("/admin/create")
-	public String saveUser(@ModelAttribute("user") @Valid Employee user, BindingResult bindingResult, Model model) {
+	public String saveUser(@ModelAttribute("user") @Valid Employee user, BindingResult bindingResult, Model model, @RequestParam("manager") int managerId) {
 		HashSet<Role> newRoleSet = new HashSet<Role>();
 		if (bindingResult.hasErrors()) {
 
@@ -73,7 +79,7 @@ public class AdminUserController {
 			Role newRole = roleRepo.findRole(type.getRoleId());
 			newRoleSet.add(newRole);
 		}
-
+		user.setManagerId(managerId);
 		user.setRoles(newRoleSet);
 		empRepo.save(user);
 
@@ -99,25 +105,22 @@ public class AdminUserController {
 		System.out.println("Employee delete");
 		return mav;
 	}
-	
-	
-	
-	/*Edit User */
+
+	/* Edit User */
 	@RequestMapping(value = "/admin/edit/{id}", method = RequestMethod.GET)
-	public String editUser(@PathVariable String id, Model model)
-	{
+	public String editUser(@PathVariable String id, Model model) {
 		Employee emp = empServ.findEmpById(Integer.parseInt(id));
+		List<Employee> managerList = empServ.findAllManager();
 		List<Role> e = roleRepo.findAll();
 		for (Role E : e) {
 			System.out.println(E.toString());
 		}
-		model.addAttribute("user",emp);
-		model.addAttribute("roles",e);
+		model.addAttribute("managerlist",managerList);
+		model.addAttribute("user", emp);
+		model.addAttribute("roles", e);
 		return "edituser";
 	}
-	
-	
-	
+
 	@RequestMapping(value = "/admin/edituser/{id}", method = RequestMethod.POST)
 	public String editUser(@ModelAttribute @Valid Employee user, BindingResult bindingResult, Model model,
 			@PathVariable int id) {
@@ -127,7 +130,7 @@ public class AdminUserController {
 		}
 		System.out.println("edit success");
 		empServ.editEmp(user);
-		
+
 		return "redirect:/admin/list";
 
 	}
