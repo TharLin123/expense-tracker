@@ -14,7 +14,7 @@
 		<h1>New Staff Form</h1>
 
 		<form th:object="${user}" th:action="@{/admin/create}" method="post">
-			<table>
+			<table style="border: 1;margin-left: auto; margin-right: auto;">
 				<tbody>
 					<tr>
 						<td>Staff's Name:</td>
@@ -29,7 +29,7 @@
 						<td><input type="text" th:field="*{password}" /></td>
 					</tr>
 					<tr>
-						<td>Staff's Role':</td>
+						<td>Staff's Role:</td>
 						<td>
 							<select size="03" multiple="multiple" name="roles" id="roles">
 								<option th:each="role:${rolelist}" th:value="${role.roleId}"
@@ -37,14 +37,23 @@
 								</option>
 							</select>
 						</td>
+					</tr><tr>
+						<td>Manager Select:</td>
+						<td>
+							<select size="03" name="manager" id="manager">
+								<option th:each="manager:${managerlist}" th:value="${manager.employeeId}" th:text="${manager.name}">
+								</option>
+							</select>
+						</td>
 					</tr>
 				</tbody>
-			</table>
+			</table >
+			<br><br>
 			<a><input type="submit" value="Create" class="bclass" /></a>
 
 		</form>
 		<br>
-		<a th:href="@{/admin/history}">Back to main</a>
+		<a th:href="@{/admin/list}" style="font-size: 18px;">Back to list</a>
 	</div>
 
 </body>
