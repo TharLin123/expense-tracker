@@ -48,12 +48,23 @@
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+<<<<<<< HEAD
+			<!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+		<dependency>
+		    <groupId>org.projectlombok</groupId>
+		    <artifactId>lombok</artifactId>
+		    <version>1.18.22</version>
+		    <scope>provided</scope>
+		</dependency>
+
+=======
 			<dependency>
 			    <groupId>org.projectlombok</groupId>
 			    <artifactId>lombok</artifactId>
 			    <version>1.18.22</version>
 			    <scope>provided</scope>
 			</dependency>
+>>>>>>> 967ec2f03756ac85b799e381e2a0a919e102895f
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

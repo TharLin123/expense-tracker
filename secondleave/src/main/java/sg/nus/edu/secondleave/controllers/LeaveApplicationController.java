@@ -1,6 +1,5 @@
 package sg.nus.edu.secondleave.controllers;
 
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -17,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.edu.secondleave.model.Comment;
 import sg.nus.edu.secondleave.model.LeaveApplication;
+import sg.nus.edu.secondleave.services.CommentService;
 import sg.nus.edu.secondleave.services.LeaveApplicationService;
 import sg.nus.edu.secondleave.util.LeaveEnum;
-import sg.nus.edu.secondleave.util.TypeEnum;
 
 @Controller
 @RequestMapping("/leaves")
@@ -27,6 +26,9 @@ public class LeaveApplicationController {
 	
 	@Autowired
 	LeaveApplicationService leaveAppService;
+	
+	@Autowired
+	CommentService commentService;
 
 	@GetMapping("/view")
 	public String viewLeaveApp(Model model) {
@@ -46,33 +48,18 @@ public class LeaveApplicationController {
 		return "LeaveApplicationDetail";
 	}
 	
-	@PostMapping("/approve/{id}")
-	public void approveLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
+	@PostMapping("/decide/{id}")
+	public String approveLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
-		leaveApp.get().setStatus(LeaveEnum.APPROVED);
-		comment.setLeaves(leaveApp);
-		System.out.println(comment.getMessage());
-		System.out.println(comment.getLeaves().get().getStatus());
+		comment.setLeave(leaveApp);
+		commentService.saveComment(comment);
+		
+		if(comment.getDecision().equals("approved")) {
+			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
+		} else {
+			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
+		}
+		return "LeaveApplicationView";
 	}
-	
-	@PostMapping("/reject/{id}")
-	public void rejectLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
-		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
-		leaveApp.get().setStatus(LeaveEnum.REJECTED);
-		comment.setLeaves(leaveApp);
-		System.out.println(comment.getMessage());
-		System.out.println(comment.getLeaves().get().getStatus());
-	}
-	
-//	Mock Data
-	@GetMapping("/save")
-	public void saveLeaveApp() {
-		LeaveApplication lap = new LeaveApplication();
-		lap.setEmployee(leaveAppService.getEmployee(1).get());
-		lap.setFromDate(new Date());
-		lap.setToDate(new Date());
-		lap.setStatus(LeaveEnum.APPLIED);
-		lap.setType(TypeEnum.ANNUAL);
-		leaveAppService.saveLeaveApplication(lap);
-	}
+
 }

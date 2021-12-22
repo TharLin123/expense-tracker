@@ -14,13 +14,14 @@ import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
 import sg.nus.edu.secondleave.repo.LeaveApplicationRepository;
+import sg.nus.edu.secondleave.util.LeaveEnum;
 import sg.nus.edu.secondleave.util.TypeEnum;
 
 @Service
 public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 
 	@Autowired
-	LeaveApplicationRepository leaveAppRepo;
+	private LeaveApplicationRepository leaveAppRepo;
 	
 	@Autowired
 	private EmployeeRepository employeeRepo;
@@ -57,4 +58,23 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 									.collect(Collectors.toList());
 		return leaveTypes;
 	}
+
+//	@Override
+//	public List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id) {
+//		return leaveAppRepo.findLAPByEmployeeId(id);
+//	}
+
+	@Override
+	@Transactional
+	public void saveLeaveApplication(Optional<LeaveApplication> leaveApp) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	@Transactional
+	public void updateLeaveApplication(int Id, String leaveEnum) {
+		leaveAppRepo.updateLeaveApplication(Id, leaveEnum);
+	}
+
 }
