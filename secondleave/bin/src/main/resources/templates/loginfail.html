@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head"/>
+<body>
+	<div th:replace="fragments/layout.html :: menu"/>
+	<div th:replace="fragments/layout.html :: header"/> 
+	<p>Login fail. Please try again.</p>
+	<br>
+	<p><a th:href="@{/home}">Return to home page</a><p>
+	</div>
+</body>
+
+</html>
