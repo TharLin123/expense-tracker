@@ -21,5 +21,5 @@ public interface LeaveApplicationRepository extends JpaRepository<LeaveApplicati
 	@Transactional
 	@Modifying
 	@Query(value="Update leave_application lap SET lap.status = :leaveEnum where lap.leave_app_id = :leaveId",nativeQuery = true)
-    public void updateLeaveApplication(@Param("leaveId") int leaveId, @Param("leaveEnum") LeaveEnum leaveEnum);
+    public void updateLeaveApplication(@Param("leaveId") int leaveId, @Param("leaveEnum") String leaveEnum);
 }

@@ -54,9 +54,9 @@ public class LeaveApplicationController {
 		comment.setLeave(leaveApp);
 
 		if(comment.getDecision() == "approved") {
-			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED);
+			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
 		} else {
-			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED);
+			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
 		}
 		
 		commentService.saveComment(comment);

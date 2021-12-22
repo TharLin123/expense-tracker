@@ -73,7 +73,7 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 
 	@Override
 	@Transactional
-	public void updateLeaveApplication(int Id, LeaveEnum leaveEnum) {
+	public void updateLeaveApplication(int Id, String leaveEnum) {
 		leaveAppRepo.updateLeaveApplication(Id, leaveEnum);
 	}
 

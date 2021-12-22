@@ -24,7 +24,7 @@ public interface LeaveApplicationService {
 	public List<String> findAllLeaveType();
 
 	
-	void updateLeaveApplication(int Id, LeaveEnum leaveEnum);
+	void updateLeaveApplication(int Id, String leaveEnum);
 
 	void saveLeaveApplication(LeaveApplication leaveApp);
 }
