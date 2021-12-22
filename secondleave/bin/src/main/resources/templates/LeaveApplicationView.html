@@ -11,8 +11,10 @@
     <table border="1" >
     <thead>
         <tr>
+         	<th> No. </th>
             <th> Employee </th>
             <th> Leave Type </th>
+            <th> Status </th>
             <th> Actions </th>
         </tr>
     </thead>
@@ -21,8 +23,10 @@
             <td colspan="2"> No Leave Applications. </td>
         </tr>
         <tr th:each="leave : ${leaves}">
-            <td><span th:text="${leave.employee.name}"> Leave Type </span></td>
+        	<td><span th:text="${leave.leaveAppId}"> No. </span></td>
+            <td><span th:text="${leave.employee.name}"> Employee </span></td>
             <td><span th:text="${leave.type}"> Leave Type </span></td>
+            <td><span th:text="${leave.status}"> Status </span></td>
             <td>
             	<span><a th:href="@{/leaves/detail/}+${leave.leaveAppId}">Detail</a></span>
             </td>
