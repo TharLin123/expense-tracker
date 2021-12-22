@@ -7,12 +7,13 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.Transient;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sg.nus.edu.secondleave.util.LeaveEnum;
 
 @Entity
-@Data
 @NoArgsConstructor
 public class Comment {
 
@@ -24,4 +25,39 @@ public class Comment {
 	private Optional<LeaveApplication> leave;
 
 	private String message;
+
+	@Transient
+	private String decision;
+
+	public Integer getCommentId() {
+		return CommentId;
+	}
+
+	public void setCommentId(Integer commentId) {
+		CommentId = commentId;
+	}
+
+	public Optional<LeaveApplication> getLeave() {
+		return leave;
+	}
+
+	public void setLeave(Optional<LeaveApplication> leave) {
+		this.leave = leave;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public void setMessage(String message) {
+		this.message = message;
+	}
+
+	public String getDecision() {
+		return decision;
+	}
+
+	public void setDecision(String decision) {
+		this.decision = decision;
+	}
 }
