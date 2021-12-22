@@ -16,8 +16,10 @@
 		<strong>Work Dissemination: </strong> <span th:text="${leave.workDissemination}" /><br/>
 		<strong>Reason: </strong> <span th:text="${leave.reason}" /><br/>
 		
-	<h3>Approve/Reject Leave</h3>
- 	<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
+	
+	<div th:if="${leave.type == 'APPLIED'}">
+		<h3>Approve/Reject Leave</h3>
+		<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
         <p>Comment:</p>
          	<textarea type="text" th:field="*{message}" required></textarea><br/> 
          	
@@ -29,6 +31,7 @@
             
         	<input type="submit" value="Submit" />
     </form>
+	</div>
 		
     <h3>Leave History of <span th:text="${leave.employee.name}" /></h3>
     <table border="1" >
