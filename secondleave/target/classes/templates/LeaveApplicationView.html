@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leave Applications</title>
+</head>
+<body>
+<h1>Leave Applications View</h1>
+    <table border="1" >
+    <thead>
+        <tr>
+            <th> Employee </th>
+            <th> Leave Type </th>
+            <th> Actions </th>
+        </tr>
+    </thead>
+    <tbody>
+	<tr th:if="${leaves.empty}">
+            <td colspan="2"> No Leave Applications. </td>
+        </tr>
+        <tr th:each="leave : ${leaves}">
+            <td><span th:text="${leave.employee.name}"> Leave Type </span></td>
+            <td><span th:text="${leave.type}"> Leave Type </span></td>
+            <td>
+            	<span><a th:href="@{/leaves/detail/}+${leave.leaveAppId}">Detail</a></span>
+            </td>
+        </tr>
+    </tbody>
+</table>
+</body>
+</html>
