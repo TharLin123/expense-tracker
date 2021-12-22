@@ -18,12 +18,14 @@ import javax.validation.constraints.NotEmpty;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 import sg.nus.edu.secondleave.util.LeaveEnum;
 import sg.nus.edu.secondleave.util.TypeEnum;
 
 @Entity
-@Data
 @NoArgsConstructor
 public class LeaveApplication {
 
@@ -63,6 +65,89 @@ public class LeaveApplication {
 	
 	@ManyToOne
 	private Employee employee;
+
+	//Getters and Setters to avoid StackOverFlow caused By @Data
+	public Integer getLeaveAppId() {
+		return leaveAppId;
+	}
+
+	public void setLeaveAppId(Integer leaveAppId) {
+		this.leaveAppId = leaveAppId;
+	}
+
+	public TypeEnum getType() {
+		return type;
+	}
+
+	public void setType(TypeEnum type) {
+		this.type = type;
+	}
+
+	public Date getFromDate() {
+		return fromDate;
+	}
+
+	public void setFromDate(Date fromDate) {
+		this.fromDate = fromDate;
+	}
+
+	public Date getToDate() {
+		return toDate;
+	}
+
+	public void setToDate(Date toDate) {
+		this.toDate = toDate;
+	}
+
+	public LeaveEnum getStatus() {
+		return status;
+	}
+
+	public void setStatus(LeaveEnum status) {
+		this.status = status;
+	}
+
+	public String getReason() {
+		return reason;
+	}
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+	public String getLeaveType() {
+		return leaveType;
+	}
+
+	public void setLeaveType(String leaveType) {
+		this.leaveType = leaveType;
+	}
+
+	public String getWorkDissemination() {
+		return workDissemination;
+	}
+
+	public void setWorkDissemination(String workDissemination) {
+		this.workDissemination = workDissemination;
+	}
+
+	public String getContactDetails() {
+		return contactDetails;
+	}
+
+	public void setContactDetails(String contactDetails) {
+		this.contactDetails = contactDetails;
+	}
+
+	public Employee getEmployee() {
+		return employee;
+	}
+
+	public void setEmployee(Employee employee) {
+		this.employee = employee;
+	}
+
+
 	
 }
 

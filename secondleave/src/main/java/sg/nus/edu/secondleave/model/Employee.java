@@ -16,11 +16,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 
 @Entity
-@Data
 @NoArgsConstructor
 public class Employee {
 	
@@ -57,6 +59,73 @@ public class Employee {
 		this.leaves = leaves;
 		this.leaveEntitlements = leaveEntitlements;
 	}
+
+	//Getters and Setters to avoid StackOverFlow caused By @Data
+	public Integer getEmployeeId() {
+		return employeeId;
+	}
+
+	public void setEmployeeId(Integer employeeId) {
+		this.employeeId = employeeId;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public Integer getManagerId() {
+		return managerId;
+	}
+
+	public void setManagerId(Integer managerId) {
+		this.managerId = managerId;
+	}
+
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	public Collection<LeaveApplication> getLeaves() {
+		return leaves;
+	}
+
+	public void setLeaves(Collection<LeaveApplication> leaves) {
+		this.leaves = leaves;
+	}
+
+	public Collection<LeaveEntitlement> getLeaveEntitlements() {
+		return leaveEntitlements;
+	}
+
+	public void setLeaveEntitlements(Collection<LeaveEntitlement> leaveEntitlements) {
+		this.leaveEntitlements = leaveEntitlements;
+	}
+
+
 
 
 	
