@@ -52,14 +52,13 @@ public class LeaveApplicationController {
 	public String approveLeaveApp(@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
 		comment.setLeave(leaveApp);
-
-		if(comment.getDecision() == "approved") {
+		commentService.saveComment(comment);
+		
+		if(comment.getDecision().equals("approved")) {
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
 		} else {
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
 		}
-		
-		commentService.saveComment(comment);
 		return "LeaveApplicationView";
 	}
 
