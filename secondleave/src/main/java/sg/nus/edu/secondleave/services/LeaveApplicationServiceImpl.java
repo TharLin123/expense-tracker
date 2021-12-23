@@ -79,4 +79,10 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	public List<LeaveApplication> findLeaveApplicationsForApproval() {
 		return leaveAppRepo.findLapForApproval();
 	}
+	
+	@Override
+	public List<LeaveApplication> listAll(){
+		return leaveAppRepo.findAll();
+	}
+	
 }

@@ -19,8 +19,8 @@ function makeFieldNotRequired() {
 <body>
 	<div th:replace="fragments/layout.html :: menu" />
 	<div th:replace="fragments/layout.html :: header" />
-<a th:href="@{/leaves/view}">BACK TO LEAVE APPLICATIONS LIST</a> |
-	<h1>Subordinate Leave Applications</h1>
+
+	<h1>Leave Applications Detail</h1>
 		<strong>Employee Name: </strong> <span th:text="${leave.employee.name}" /><br/>
 		<strong>Leave Type: </strong> <span th:text="${leave.type}" /><br/>
 		<strong>From : </strong> <span th:text="${leave.fromDate}" /><br/>

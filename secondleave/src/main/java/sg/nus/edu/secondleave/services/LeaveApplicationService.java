@@ -27,4 +27,6 @@ public interface LeaveApplicationService {
 	void saveLeaveApplication(LeaveApplication leaveApp);
 	
 	void updateLeaveApplication(LeaveApplication leaveApplication);
+
+	List<LeaveApplication> listAll();
 }
