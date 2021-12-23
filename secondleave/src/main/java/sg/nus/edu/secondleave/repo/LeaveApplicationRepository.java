@@ -13,10 +13,11 @@ import sg.nus.edu.secondleave.model.LeaveApplication;
 
 @Repository
 public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Integer> {
-	
+	//JPQL NOT WORKING, USED NATIVE QUERY INSTEAD
 	@Transactional
 	@Modifying
-	@Query(value="SELECT * FROM leave_application lap WHERE lap.employee_employee_id = :id", nativeQuery = true)
+	@Query(value="SELECT * FROM leave_application lap WHERE lap.employee_employee_id = :id"
+			+ " AND lap.status = 'APPROVED' OR lap.status = 'REJECTED'", nativeQuery = true)
 	public List<LeaveApplication> findLAPByEmployeeId(@Param("id") Integer id );
 	
 	@Transactional

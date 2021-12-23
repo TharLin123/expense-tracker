@@ -31,7 +31,7 @@ public class LeaveApplicationController {
 	CommentService commentService;
 
 	@RequestMapping("/view")
-	public String viewLeaveApp(Model model) {
+	public String viewLeaveApps(Model model) {
 		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
 		model.addAttribute("leaves",leaveApps);
 		return "LeaveApplicationView";
