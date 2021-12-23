@@ -1,6 +1,7 @@
 package sg.nus.edu.secondleave.controllers;
 
 import java.io.IOException;
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
@@ -26,6 +28,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.supercsv.io.CsvBeanWriter;
+import org.supercsv.io.ICsvBeanWriter;
+import org.supercsv.prefs.CsvPreference;
 
 import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
@@ -245,5 +250,33 @@ public class EmployeeController {
 		// 储存该表单并重定向回仪表盘
 		laService.saveLeaveApplication(leave);
 		return mv;
+	}
+	
+	@GetMapping(value = "/employee/export")
+	public void exportToCSV(HttpServletResponse response)throws IOException{
+		response.setContentType("text/csv");
+		DateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd_HH:mm:ss");
+		String currentDateTime = dateFormatter.format(new Date());
+		String fileName = "records"+currentDateTime+".csv";
+		
+		String headerKey = "Content-Disposition";
+		String headervalue = "attachment;filename="+fileName;
+		
+		response.setHeader(headerKey, headervalue);
+		
+		List<LeaveApplication> listLeaveApps = laService.listAll();
+		
+		ICsvBeanWriter csvWriter = new CsvBeanWriter(response.getWriter(),CsvPreference.STANDARD_PREFERENCE);
+		
+		String[] csvHeader = {"Id","Type","From Date","To Date","Status","Reason","Work Dissemination","Contact Details"};
+		String[] nameMapping = {"leaveAppId","type","fromDate","toDate","status","reason","workDissemination","contactDetails"};
+		
+		csvWriter.writeHeader(csvHeader);
+		
+		for(LeaveApplication la: listLeaveApps) {
+			csvWriter.write(la, nameMapping);
+		}
+		
+		csvWriter.close();
 	}
 }
