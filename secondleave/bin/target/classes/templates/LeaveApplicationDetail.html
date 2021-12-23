@@ -13,12 +13,14 @@ function makeFieldNotRequired() {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" th:href="@{/css/simple.css}" />
     <title>Leave Application Detail</title>
 </head>
 <body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
 <a th:href="@{/leaves/view}">BACK TO LEAVE APPLICATIONS LIST</a> |
-<a th:href="@{/home}">HOME</a>
-	<h1>Leave Application Detail</h1>
+	<h1>Subordinate Leave Applications</h1>
 		<strong>Employee Name: </strong> <span th:text="${leave.employee.name}" /><br/>
 		<strong>Leave Type: </strong> <span th:text="${leave.type}" /><br/>
 		<strong>From : </strong> <span th:text="${leave.fromDate}" /><br/>
@@ -29,7 +31,7 @@ function makeFieldNotRequired() {
 		<strong>Reason: </strong> <span th:text="${leave.reason}" /><br/>
 		
 	
-	<div th:if="${#strings.equals(leave.status, 'APPLIED')}">
+	<div th:if="${#strings.equals(leave.status, 'APPLIED' ) OR #strings.equals(leave.status, 'UPDATED' )}">
 		<h3>Approve/Reject Leave</h3>
 		<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
         <p>Comment:</p>

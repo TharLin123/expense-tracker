@@ -19,14 +19,17 @@
 					<tr>
 						<td>Staff's Name:</td>
 						<td><input type="text" th:field="*{name}" /></td>
+						<td th:if="${#fields.hasErrors('name')}" th:errors="*{name}"></td>
 					</tr>
 					<tr>
 						<td>Username:</td>
 						<td><input type="text" th:field="*{username}" /></td>
+						<td th:if="${#fields.hasErrors('username')}" th:errors="*{username}"></td>
 					</tr>
 					<tr>
 						<td>Initial Password: </td>
 						<td><input type="text" th:field="*{password}" /></td>
+						<td th:if="${#fields.hasErrors('password')}" th:errors="*{password}"></td>
 					</tr>
 					<tr>
 						<td>Staff's Role:</td>
@@ -37,14 +40,16 @@
 								</option>
 							</select>
 						</td>
+						<td th:if="${#fields.hasErrors('roles')}" th:errors="*{roles}"></td>
 					</tr><tr>
 						<td>Manager Select:</td>
 						<td>
-							<select size="03" name="manager" id="manager">
+							<select size="03" name="managerId" id="managerId">
 								<option th:each="manager:${managerlist}" th:value="${manager.employeeId}" th:text="${manager.name}">
 								</option>
 							</select>
 						</td>
+						<td th:if="${#fields.hasErrors('managerId')}" th:errors="*{managerId}"></td>
 					</tr>
 				</tbody>
 			</table >

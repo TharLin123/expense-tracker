@@ -19,29 +19,33 @@
 		<fieldset>
 			<label for="fromDate">From Date: </label>
 			<input type="text" th:field="*{fromDate}" placeholder="dd/MM/yyyy"
-				th:text="${#dates.format(newLeave.fromDate,'dd/MM/yyyy')}" />
+				th:text="${#temporals.format(newLeave.fromDate,'dd/MM/yyyy')}" />
 		</fieldset>
+		<p th:if"${#fields.hasErrors('fromDate')}" th:errors="*{fromDate}" style="color: red"></p>
 		<!--TO DATE-->
 		<fieldset>
 			<label for="toDate">To Date: </label>
 			<input type="text" th:field="*{toDate}" placeholder="dd-MM-yyyy"
-				th:text="${#dates.format(newLeave.toDate,'dd/MM/yyyy')}" />
+				th:text="${#temporals.format(newLeave.toDate,'dd/MM/yyyy')}" />
 		</fieldset>
+		<p th:if"${#fields.hasErrors('toDate')}" th:errors="*{toDate}" style="color: red"></p>
 		<!--REASON-->
 		<fieldset>
 			<label for="reason">Reason: </label>
 			<input type="text" th:field="*{reason}" />
 		</fieldset>
+		<p th:if"${#fields.hasErrors('reason')}" th:errors="*{reason}" style="color: red"></p>
 		<!--LEAVE TYPE-->
 		<fieldset>
 			<label for="type">Leave Type: </label>
-			<select th:field="*{leaveType}">
+			<select th:field="*{type}">
 
 				<option value=""> Please select your leave type</option>
 				<option th:each="leavetype:${leavetype}" th:value="${leavetype}" th:text="${leavetype}">
 				</option>
 
 			</select>
+			<p th:if"${#fields.hasErrors('type')}" th:errors="*{type}" style="color: red"></p>
 		</fieldset>
 		<!--WORK DISSEMINATION-->
 		<fieldset>

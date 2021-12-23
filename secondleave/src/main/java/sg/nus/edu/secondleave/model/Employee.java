@@ -40,8 +40,8 @@ public class Employee {
 			=@JoinColumn(name="roleId"))
 	private Set<Role> roles;
 	
-	@OneToMany(targetEntity = LeaveApplication.class, mappedBy = "employee")
-	private Collection<LeaveApplication> leaves;
+//	@OneToMany(targetEntity = LeaveApplication.class, mappedBy = "employee")
+//	private Collection<LeaveApplication> leaves;
 	
 	@OneToMany(cascade = CascadeType.ALL,
         orphanRemoval = true,
@@ -56,7 +56,7 @@ public class Employee {
 		this.password = password;
 		this.managerId = managerId;
 		this.roles = roles;
-		this.leaves = leaves;
+//		this.leaves = leaves;
 		this.leaveEntitlements = leaveEntitlements;
 	}
 
@@ -109,13 +109,13 @@ public class Employee {
 		this.roles = roles;
 	}
 
-	public Collection<LeaveApplication> getLeaves() {
-		return leaves;
-	}
-
-	public void setLeaves(Collection<LeaveApplication> leaves) {
-		this.leaves = leaves;
-	}
+//	public Collection<LeaveApplication> getLeaves() {
+//		return leaves;
+//	}
+//
+//	public void setLeaves(Collection<LeaveApplication> leaves) {
+//		this.leaves = leaves;
+//	}
 
 	public Collection<LeaveEntitlement> getLeaveEntitlements() {
 		return leaveEntitlements;

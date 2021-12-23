@@ -2,13 +2,13 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <!--helloworld-->
 <head th:replace="fragments/layout.html :: html_head" />
-
+<script src="/js/jquery-1.11.3.min.js"></script>
 <body>
 	<div th:replace="fragments/layout.html :: menu" />
 	<div th:replace="fragments/layout.html :: header" />
 	<h2>Employee Leave History</h2>
 	<div th:if="${not #lists.isEmpty(lhistory)}">
-		<table style=" border: 1;">
+		<table style=" border: 1;" id="table">
 			<tr class="listHeading">
 				<th><span th:text="#{fieldLabel.reference}"></span></th>
 				<th><span th:text="#{fieldLabel.type}"></span></th>
@@ -21,8 +21,8 @@
 			<tr th:each="leave : ${lhistory}" class="listRecord">
 				<td align="left" th:text="${leave.leaveAppId}">Id</td>
 				<td align="left" th:text="${leave.type}">Id</td>
-				<td align="left" th:text="${#dates.format(leave.fromDate, 'dd/MM/yyyy')}">From</td>
-				<td align="left" th:text="${#dates.format(leave.toDate, 'dd/MM/yyyy')}">To</td>
+				<td align="left" th:text="${#temporals.format(leave.fromDate, 'dd/MM/yyyy')}">From</td>
+				<td align="left" th:text="${#temporals.format(leave.toDate, 'dd/MM/yyyy')}">To</td>
 				<td align="left" th:text="${leave.status}">Status</td>
 
 				<td>
@@ -39,9 +39,109 @@
 				</td>
 			</tr>
 		</table>
+		<button onclick="refreshTable(1)">Previous</button><input type="text" name="page" th:value="${page}" readonly><button onclick="refreshTable(2)">Next</button>
 	</div>
+<input type="hidden" name="totalPage" th:value="${totalPage}">
 </body>
-
+<script>
+	function refreshTable(type) {
+	    var page = $("input[name=page]").val();
+        if (type == "1") {
+            if (page == 1) {
+                return false;
+            }
+			var index = Number(page) - 1;
+            var url = "/staff/historyTable?page=" + index;
+            $.get(url, function (res) {
+				$.get(url, function (res) {
+					$("#table").html("");
+					var str = "";
+					str += '<tr class="listHeading">\n' +
+							'\t\t\t\t<th><span>reference</span></th>\n' +
+							'\t\t\t\t<th><span>type</span></th>\n' +
+							'\t\t\t\t<th><span>startDate</span></th>\n' +
+							'\t\t\t\t<th><span>endDate</span></th>\n' +
+							'\t\t\t\t<th><span>status</span></th>\n' +
+							'\t\t\t\t<th><span>update</span></th>\n' +
+							'\t\t\t\t<th><span>delete</span></th>\n' +
+							'\t\t\t</tr>'
+					var data = res.data;
+					$(data).each(function () {
+						str += '<tr class="listRecord">\n' +
+								'\t\t\t\t<td align="left">' + this.leaveAppId + '</td>\n' +
+								'\t\t\t\t<td align="left">' + this.type + '</td>\n' +
+								'\t\t\t\t<td align="left"> ' + this.fromDate + '</td>\n' +
+								'\t\t\t\t<td align="left"> ' + this.toDate + '</td>\n' +
+								'\t\t\t\t<td align="left"> ' + this.status + '</td>\n' +
+								'\n' +
+								'\t\t\t\t<td>\n' +
+								'\t\t\t\t\t<div\n' +
+								'\t\t\t\t\t\t>\n' +
+								'\t\t\t\t\t\t<a href="/employee/leave/edit/' + this.leaveAppId + '">Update</a>\n' +
+								'\t\t\t\t\t</div>\n' +
+								'\t\t\t\t</td>\n' +
+								'\t\t\t\t<td>\n' +
+								'\t\t\t\t\t<div>\n' +
+								'\t\t\t\t\t\t<a href="/employee/leave/delete/ ' + this.leaveAppId + '">Delete</a>\n' +
+								'\t\t\t\t\t</div>\n' +
+								'\t\t\t\t</td>\n' +
+								'\t\t\t</tr>'
+					})
+					$("#table").html(str);
+					// 修改当前页数
+					$("input[name=page]").val(res.page);
+					$("input[name=totalPage]").val(res.totalPage);
+				})
+            })
+        } else {
+            var totalPage = $("input[name=totalPage]").val();
+            if (page == totalPage) {
+                return false;
+            }
+			var index = Number(page) + 1;
+            var url = "/staff/historyTable?page=" + index;
+            $.get(url, function (res) {
+                $("#table").html("");
+                var str = "";
+                str += '<tr class="listHeading">\n' +
+						'\t\t\t\t<th><span>reference</span></th>\n' +
+						'\t\t\t\t<th><span>type</span></th>\n' +
+						'\t\t\t\t<th><span>startDate</span></th>\n' +
+						'\t\t\t\t<th><span>endDate</span></th>\n' +
+						'\t\t\t\t<th><span>status</span></th>\n' +
+						'\t\t\t\t<th><span>update</span></th>\n' +
+						'\t\t\t\t<th><span>delete</span></th>\n' +
+						'\t\t\t</tr>'
+                var data = res.data;
+                $(data).each(function () {
+                    str += '<tr class="listRecord">\n' +
+                        '\t\t\t\t<td align="left">' + this.leaveAppId + '</td>\n' +
+                        '\t\t\t\t<td align="left">' + this.type + '</td>\n' +
+                        '\t\t\t\t<td align="left"> ' + this.fromDate + '</td>\n' +
+                        '\t\t\t\t<td align="left"> ' + this.toDate + '</td>\n' +
+                        '\t\t\t\t<td align="left"> ' + this.status + '</td>\n' +
+                        '\n' +
+                        '\t\t\t\t<td>\n' +
+                        '\t\t\t\t\t<div\n' +
+                        '\t\t\t\t\t\t>\n' +
+                        '\t\t\t\t\t\t<a href="/employee/leave/edit/' + this.leaveAppId + '">Update</a>\n' +
+                        '\t\t\t\t\t</div>\n' +
+                        '\t\t\t\t</td>\n' +
+                        '\t\t\t\t<td>\n' +
+                        '\t\t\t\t\t<div>\n' +
+                        '\t\t\t\t\t\t<a href="/employee/leave/delete/ ' + this.leaveAppId + '">Delete</a>\n' +
+                        '\t\t\t\t\t</div>\n' +
+                        '\t\t\t\t</td>\n' +
+                        '\t\t\t</tr>'
+                })
+				$("#table").html(str);
+                // 修改当前页数
+				$("input[name=page]").val(res.page);
+				$("input[name=totalPage]").val(res.totalPage);
+            })
+        }
+    }
+</script>
 </html>
 
 <!--test -->

@@ -69,6 +69,11 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	public void updateLeaveApplication(int Id, String leaveEnum) {
 		leaveAppRepo.updateLeaveApplication(Id, leaveEnum);
 	}
+	
+	@Override
+	public void updateLeaveApplication(LeaveApplication leaveApplication) {
+		leaveAppRepo.save(leaveApplication);
+	}
 
 	@Override
 	public List<LeaveApplication> findLeaveApplicationsForApproval() {

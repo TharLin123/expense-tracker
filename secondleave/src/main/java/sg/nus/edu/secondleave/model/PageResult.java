@@ -1,6 +1,6 @@
 package sg.nus.edu.secondleave.model;
 
-public class HistoryResult {
+public class PageResult {
     private int totalPage;
     private int page;
     private int total;

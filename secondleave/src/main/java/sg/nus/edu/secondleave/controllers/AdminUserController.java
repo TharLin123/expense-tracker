@@ -60,7 +60,7 @@ public class AdminUserController {
 		Employee emp = (Employee) session.getAttribute("admvalidated");
 		if (emp != null) {
 			System.out.println(emp.getName());
-			return "staffhistory";
+			return "staffList";
 		}
 		return "forward:/home";
 	}

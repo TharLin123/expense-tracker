@@ -25,4 +25,6 @@ public interface LeaveApplicationService {
 	void updateLeaveApplication(int Id, String leaveEnum);
 
 	void saveLeaveApplication(LeaveApplication leaveApp);
+	
+	void updateLeaveApplication(LeaveApplication leaveApplication);
 }

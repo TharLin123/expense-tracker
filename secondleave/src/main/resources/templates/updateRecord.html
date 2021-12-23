@@ -3,6 +3,54 @@
 <!--helloworld-->
 <head th:replace="fragments/layout.html :: html_head" />
 <body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h3>Edit Record page</h3>
+		<form action="#" th:action="@{/employee/leave/edit/}+${leaveApplication.leaveAppId}" th:object="${employee}" method="post">
+		<table style="border: 1;margin-left: auto; margin-right: auto;">
+			<tbody>
+			<input type="hidden" name="leaveAppId" th:value="${leaveApplication.leaveAppId}" readonly="readonly" />
+				<tr>
+					<td><span th:text="#{fieldLabel.employeeId}"></span></td>
+					<td><input type="text" name="employee.employeeId" th:value="${employee.employeeId}" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<td><span th:text="#{fieldLabel.empName}"></span></td>
+					<td><input type="text" name="employee.name" th:value="${employee.name}" readonly="readonly" /></td>
+				</tr>
+				<tr>
+					<td><span>fromDate</span></td>
+					<td><input type="text" placeholder="dd/MM/yyyy"
+							name="fromDate"   th:value="${#temporals.format(leaveApplication.fromDate,'dd/MM/yyyy')}" /></td>
+				</tr>
+				<tr>
+					<td><span>toDate</span></td>
+					<td><input type="text" placeholder="dd/MM/yyyy"
+							 name="toDate" th:value="${#temporals.format(leaveApplication.toDate,'dd/MM/yyyy')}"/></td>
+				</tr>
+				<tr>
+					<td><label>Reason: </label></td>
+					<td><input type="text" name="reason" th:value="${leaveApplication.reason}" /></td>
+				</tr>
+				<tr>
+					<td><label >Leave Type: </label></td>
+					<td><select name="type">
+						<option value=""> Please select your leave type</option>
+						<option th:each="leaveType:${leaveTypeList}" th:selected="${leaveApplication.type eq leaveType}" th:value="${leaveType}" th:text="${leaveType}">
+						</option>
+					</select></td>
+				</tr>
 
+				<tr>
+					<td><input type="submit" value="Update" /></td>
+				</tr>
+			</tbody>
+		</table >
+
+	</form>
+	<div style="text-align: center;">
+						<br><br>
+					<a th:href="@{/admin/list}" style="font-size: 15px">Back to list</a>
+	</div >
 </body>
 </html>
