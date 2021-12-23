@@ -15,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -34,19 +35,19 @@ public class LeaveApplication {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer leaveAppId;
 	
+	@NotNull(message="Must have a leave type!!!")
 	@Enumerated(EnumType.STRING)
 	private TypeEnum type;
 	
 	//Xin just comment this notempty for date to let the save process run
 	//if i could figure out how to validate notempty i will put it back
-	//@NotEmpty
-	//@Temporal(TemporalType.DATE)
+	@NotNull(message="Must have a from date!!!")	
 	@Column(name = "fromdate")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate fromDate;
 	
-	//@NotEmpty
-	//@Temporal(TemporalType.DATE)
+
+	@NotNull(message="Must have a to date!!!")
 	@Column(name = "todate")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
 	private LocalDate toDate;
@@ -54,7 +55,7 @@ public class LeaveApplication {
 	@Enumerated(EnumType.STRING)
 	private LeaveEnum status;
 	
-	@NotEmpty
+	@NotEmpty(message="Must have your reason!!!")
 	private String reason;
 		
 	private String workDissemination;
