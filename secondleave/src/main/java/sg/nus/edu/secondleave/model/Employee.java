@@ -50,7 +50,7 @@ public class Employee {
 
 	public Employee(String name, String username, String password, Integer managerId, Set<Role> roles,
 			Collection<LeaveApplication> leaves, Collection<LeaveEntitlement> leaveEntitlements) {
-		super();
+		super();	
 		this.name = name;
 		this.username = username;
 		this.password = password;

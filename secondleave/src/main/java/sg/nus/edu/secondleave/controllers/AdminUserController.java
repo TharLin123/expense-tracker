@@ -1,5 +1,7 @@
 package sg.nus.edu.secondleave.controllers;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
@@ -17,14 +19,15 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import sg.nus.edu.secondleave.model.Employee;
+import sg.nus.edu.secondleave.model.LeaveEntitlement;
 import sg.nus.edu.secondleave.model.Role;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
 import sg.nus.edu.secondleave.repo.RoleRepository;
 import sg.nus.edu.secondleave.services.EmployeeService;
+import sg.nus.edu.secondleave.services.LeaveEntitlementService;
 import sg.nus.edu.secondleave.services.RoleService;
 
 @Controller
@@ -38,6 +41,8 @@ public class AdminUserController {
 	EmployeeService empServ;
 	@Autowired
 	RoleService roleServ;
+	@Autowired
+	LeaveEntitlementService leaveServ;
 
 	@RequestMapping(value = "/admin/history")
 	public String adminpage(HttpSession session, Model model) {
@@ -65,27 +70,29 @@ public class AdminUserController {
 		return "adduser";
 	}
 
-	/* Create User */
+	/* Create User POST */
 	@PostMapping("/admin/create")
-	public String saveUser(@ModelAttribute("user") @Valid Employee user, BindingResult bindingResult, Model model, @RequestParam("manager") int managerId) {
+	public String saveUser(@ModelAttribute("user") @Valid Employee user, BindingResult bindingResult, Model model) {
 		HashSet<Role> newRoleSet = new HashSet<Role>();
+		Collection<LeaveEntitlement> entitlementCollection = new ArrayList<>();
 		if (bindingResult.hasErrors()) {
 
 			return "adduser";
 		}
-
 		for (Iterator<Role> iterator = user.getRoles().iterator(); iterator.hasNext();) {
 			Role type = (Role) iterator.next();
 			Role newRole = roleRepo.findRole(type.getRoleId());
 			newRoleSet.add(newRole);
 		}
-		user.setManagerId(managerId);
+		boolean isProfessional=empServ.checkProfessional(user);
+		entitlementCollection = leaveServ.setEntitlement(isProfessional,user);
 		user.setRoles(newRoleSet);
+		user.setLeaveEntitlements(entitlementCollection);
 		empRepo.save(user);
+		
 
 		return "redirect:/admin/list";
 	}
-
 	/* List Users */
 	@GetMapping("/admin/list")
 	public ModelAndView employeeList() {

@@ -13,5 +13,6 @@ public interface EmployeeService {
 	public Employee findEmpById(int employeeId);
 	public Employee createEmp(Employee emp);
 	public Employee editEmp(Employee emp);
+	public boolean checkProfessional(Employee emp);
 
 }

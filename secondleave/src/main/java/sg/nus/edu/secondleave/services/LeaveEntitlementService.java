@@ -1,6 +1,7 @@
 package sg.nus.edu.secondleave.services;
 
 
+import java.util.Collection;
 import java.util.List;
 
 import sg.nus.edu.secondleave.model.Employee;
@@ -12,7 +13,7 @@ public interface LeaveEntitlementService {
 	public Employee findEmpById(int employeeId);
 	public LeaveEntitlement createLeaveEntitlement(LeaveEntitlement LeaveEnt);
 	public LeaveEntitlement editLeaveEntitlement(LeaveEntitlement LeaveEnt);
-	
+	public Collection<LeaveEntitlement> setEntitlement(boolean isEmpProfessional,Employee emp);
 
 	
 

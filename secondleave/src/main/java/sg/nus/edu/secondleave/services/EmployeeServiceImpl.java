@@ -78,5 +78,20 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return managerList;
 	}
+	@Override
+	@Transactional
+	public boolean checkProfessional(Employee emp)
+	{
+		boolean roleProfessional = false;
+		Iterator<Role> iter = emp.getRoles().iterator();
+		while (iter.hasNext()) {
+			Role role =(Role)iter.next();
+			if(role.getRoleId() == 2 || role.getRoleId() == 3)
+			{
+				roleProfessional = true;
+			}
+		}
+		return roleProfessional;
+	}
 	
 }
