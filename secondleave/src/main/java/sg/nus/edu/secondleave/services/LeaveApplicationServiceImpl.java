@@ -14,7 +14,6 @@ import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
 import sg.nus.edu.secondleave.repo.LeaveApplicationRepository;
-import sg.nus.edu.secondleave.util.LeaveEnum;
 import sg.nus.edu.secondleave.util.TypeEnum;
 
 @Service
@@ -64,12 +63,6 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		return leaveAppRepo.findLAPByEmployeeId(id);
 	}
 
-	@Override
-	@Transactional
-	public void saveLeaveApplication(Optional<LeaveApplication> leaveApp) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	@Override
 	@Transactional
@@ -77,4 +70,8 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		leaveAppRepo.updateLeaveApplication(Id, leaveEnum);
 	}
 
+	@Override
+	public List<LeaveApplication> findLeaveApplicationsForApproval() {
+		return leaveAppRepo.findLapForApproval();
+	}
 }

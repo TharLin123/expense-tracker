@@ -3,6 +3,7 @@ package sg.nus.edu.secondleave.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import sg.nus.edu.secondleave.model.Comment;
+import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.services.CommentService;
 import sg.nus.edu.secondleave.services.LeaveApplicationService;
@@ -29,10 +31,22 @@ public class LeaveApplicationController {
 	
 	@Autowired
 	CommentService commentService;
+	
 
-	@RequestMapping("/view")
-	public String viewLeaveApps(Model model) {
+	@RequestMapping("/view/all")
+	public String viewAllLeaveApps(Model model, HttpSession session) {
+//		Employee emp = (Employee) session.getAttribute("validated");
+//		System.out.println(((Employee) emp.getRoles()).getName());
 		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
+		model.addAttribute("leaves",leaveApps);
+		return "LeaveApplicationView";
+	}
+	
+	@RequestMapping("/view/for-approval")
+	public String viewLeaveAppsForApproval(Model model, HttpSession session) {
+//		Employee emp = (Employee) session.getAttribute("validated");
+//		System.out.println(((Employee) emp.getRoles()).getName());
+		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsForApproval();
 		model.addAttribute("leaves",leaveApps);
 		return "LeaveApplicationView";
 	}
@@ -62,6 +76,6 @@ public class LeaveApplicationController {
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
 		}
 		commentService.saveComment(comment);
-		return "redirect:/leaves/view";
+		return "redirect:/leaves/view/all";
 	}
 }
