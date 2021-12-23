@@ -59,10 +59,10 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 		return leaveTypes;
 	}
 
-//	@Override
-//	public List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id) {
-//		return leaveAppRepo.findLAPByEmployeeId(id);
-//	}
+	@Override
+	public List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id) {
+		return leaveAppRepo.findLAPByEmployeeId(id);
+	}
 
 	@Override
 	@Transactional

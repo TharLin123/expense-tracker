@@ -21,12 +21,13 @@ function makeFieldNotRequired() {
 		<strong>Leave Type: </strong> <span th:text="${leave.type}" /><br/>
 		<strong>From : </strong> <span th:text="${leave.fromDate}" /><br/>
 		<strong>To: </strong> <span th:text="${leave.toDate}" /><br/>
+		<strong>Status: </strong> <span th:text="${leave.status}" /><br/>
 		<strong>Contact Detail: </strong> <span th:text="${leave.contactDetails}" /><br/>
 		<strong>Work Dissemination: </strong> <span th:text="${leave.workDissemination}" /><br/>
 		<strong>Reason: </strong> <span th:text="${leave.reason}" /><br/>
 		
 	
-	<div th:if="${leave.type == 'APPLIED'}">
+	<div th:if="${#strings.equals(leave.status, 'APPLIED')}">
 		<h3>Approve/Reject Leave</h3>
 		<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
         <p>Comment:</p>

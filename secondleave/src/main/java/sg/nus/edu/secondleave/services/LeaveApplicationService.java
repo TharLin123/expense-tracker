@@ -11,7 +11,7 @@ public interface LeaveApplicationService {
 
 	public List<LeaveApplication> findLeaveApplications();
 	
-//	public List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id);
+	public List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id);
 	
 	public Optional<LeaveApplication> getLeaveApplication(int id);
 	

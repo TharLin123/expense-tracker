@@ -1,5 +1,7 @@
 package sg.nus.edu.secondleave.repo;
 
+import java.util.List;
+
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -8,15 +10,14 @@ import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
 import sg.nus.edu.secondleave.model.LeaveApplication;
-import sg.nus.edu.secondleave.util.LeaveEnum;
 
 @Repository
 public interface LeaveApplicationRepository extends JpaRepository<LeaveApplication, Integer> {
 	
-//	@Transactional
-//	@Modifying
-//	@Query("SELECT lap FROM leave_application lap INNER JOIN employee e ON lap.employee_id = e.employee_id")
-//	public List<LeaveApplication> findLAPByEmployeeId(@Param("id") Integer id );
+	@Transactional
+	@Modifying
+	@Query(value="SELECT * FROM leave_application lap WHERE lap.employee_employee_id = :id", nativeQuery = true)
+	public List<LeaveApplication> findLAPByEmployeeId(@Param("id") Integer id );
 	
 	@Transactional
 	@Modifying

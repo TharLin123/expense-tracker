@@ -41,7 +41,7 @@ public class LeaveApplicationController {
 	public String detailLeaveApp(Model model,@PathVariable int id) {
 		Comment comment = new Comment();
 		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
-		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
+		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsByEmployeeId(leaveApp.get().getEmployee().getEmployeeId());
 		model.addAttribute("leaves",leaveApps);
 		model.addAttribute("leave",leaveApp.get());
 		model.addAttribute("comment", comment);
@@ -57,7 +57,8 @@ public class LeaveApplicationController {
 
 		if(comment.getDecision().equals("approved")) {
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
-		} else {
+		} 
+		else if(comment.getDecision().equals("rejected")){
 			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
 		}
 		commentService.saveComment(comment);
