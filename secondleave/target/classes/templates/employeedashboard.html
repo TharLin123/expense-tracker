@@ -1,23 +1,32 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="fragments/layout.html :: html_head" />
-
+	<link th:href="@{/css/employeedashboard.css}" rel="stylesheet" />
 </head>
 <body>
 	<div th:replace="fragments/layout.html :: menu" />
 	<div th:replace="fragments/layout.html :: header" />
 	
 	<div>	
-	<table>
-		<tr>Staff Name</tr>
-		<tr>Staff Role</tr>
-		<tr>Leave Status</tr>
-		<tr>
-			<td></td>
-		</tr>
-	</table>
-	</d>
 	
+	</div>
+	<div th:if="${not #lists.isEmpty(lentitlements)}">
+		<table style=" border: 2;">
+			<tr th:each="entitlement : ${lentitlements}" class="listRecord">
+				<div class="card custom-card text-center"
+                    style="width: 15rem; display: inline-block">
+                    <div class="card-body">
+                        <h5 class="card-title" th:text="${entitlement.entitlement}"></h5>
+                        <div th:switch="${entitlement.type}">
+						    <p th:case="${T(sg.nus.edu.secondleave.util.TypeEnum).ANNUAL}">Anuual Leaves</p>
+						    <p th:case="${T(sg.nus.edu.secondleave.util.TypeEnum).MEDICAL}">Medical Leaves</p>
+						    <p th:case="${T(sg.nus.edu.secondleave.util.TypeEnum).COMPENSATION}">Compensation Leaves</p>
+						</div>
+                    </div>
+                </div>
+			</tr>
+		</table>
+	</div>
 <!--	staff name, role
 current leave status – how many leaves taken, how many left, leave pending approval, etc  ( Table format )
 Buttons to click to: 1) apply for leave, 2) view leave application (cancel leave application), 3) view personal leave history
