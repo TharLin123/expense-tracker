@@ -22,6 +22,20 @@ public class LeaveEntitlementServiceImpl implements LeaveEntitlementService {
 	private LeaveEntitlementRepository leaveEntitlementRepo;
 	
 	@Override
+	public LeaveEntitlement findByEmployAndType(Employee employee, TypeEnum leavetype) {
+		
+		LeaveEntitlement singleEntitlement = leaveEntitlementRepo
+				.findByEmployeeAndType(employee,leavetype);
+		return singleEntitlement;
+	}
+
+	@Override
+	public List<LeaveEntitlement> findByEmployee(Employee employee) {
+		
+		List<LeaveEntitlement> allEntitlement = leaveEntitlementRepo.findByEmployee(employee);
+		return allEntitlement;
+	}
+	@Override
 	@Transactional
 	public Employee findEmpById(int employeeId) {
 		Employee empFind = employeeRepo.findByemployeeId(employeeId);
