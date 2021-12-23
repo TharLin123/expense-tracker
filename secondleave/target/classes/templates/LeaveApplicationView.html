@@ -10,7 +10,14 @@
 <body>
 	<div th:replace="fragments/layout.html :: menu" />
 	<div th:replace="fragments/layout.html :: header" />
-<h1>Leave Applications View</h1>
+	
+	<div th:if="${#strings.equals(type, 'all')}">
+		<h1>All Subordinates Leave Applications</h1>
+	</div>
+	
+	<div th:if="${#strings.equals(type, 'pending')}">
+		<h1>All Pending Leave Applications</h1>
+	</div>
     <table border="1" >
     <thead>
         <tr>
@@ -31,7 +38,7 @@
             <td><span th:text="${leave.type}"> Leave Type </span></td>
             <td><span th:text="${leave.status}"> Status </span></td>
             <td>
-            	<span><a th:href="@{/leaves/detail/}+${leave.leaveAppId}">Detail</a></span>
+            	<span><a th:href="@{/leaves/detail/}+${leave.leaveAppId}">View Detail</a></span>
             </td>
         </tr>
     </tbody>

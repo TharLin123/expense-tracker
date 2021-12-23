@@ -42,6 +42,7 @@ public class LeaveApplicationController {
 		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
 			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
 			model.addAttribute("leaves",leaveApps);
+			model.addAttribute("type","all");
 			return "LeaveApplicationView";
 		} else {
 			return "/error";
@@ -58,6 +59,7 @@ public class LeaveApplicationController {
 		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
 			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsForApproval();
 			model.addAttribute("leaves",leaveApps);
+			model.addAttribute("type","pending");
 			return "LeaveApplicationView";
 		} else {
 			return "/error";
