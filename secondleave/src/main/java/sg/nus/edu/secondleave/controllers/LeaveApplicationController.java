@@ -35,47 +35,79 @@ public class LeaveApplicationController {
 
 	@RequestMapping("/view/all")
 	public String viewAllLeaveApps(Model model, HttpSession session) {
-//		Employee emp = (Employee) session.getAttribute("validated");
-//		System.out.println(((Employee) emp.getRoles()).getName());
-		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
-		model.addAttribute("leaves",leaveApps);
-		return "LeaveApplicationView";
+		Employee emp = (Employee) session.getAttribute("validated");
+		if(emp == null) {
+			return "redirect:/";
+		}
+		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
+			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
+			model.addAttribute("leaves",leaveApps);
+			model.addAttribute("type","all");
+			return "LeaveApplicationView";
+		} else {
+			return "/error";
+		}
 	}
 	
 	@RequestMapping("/view/for-approval")
 	public String viewLeaveAppsForApproval(Model model, HttpSession session) {
-//		Employee emp = (Employee) session.getAttribute("validated");
-//		System.out.println(((Employee) emp.getRoles()).getName());
-		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsForApproval();
-		model.addAttribute("leaves",leaveApps);
-		return "LeaveApplicationView";
+		Employee emp = (Employee) session.getAttribute("validated");
+		if(emp == null) 
+		{
+			return "redirect:/";
+		}
+		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
+			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsForApproval();
+			model.addAttribute("leaves",leaveApps);
+			model.addAttribute("type","pending");
+			return "LeaveApplicationView";
+		} else {
+			return "/error";
+		}
 	}
 	
 	@GetMapping("/detail/{id}")
-	public String detailLeaveApp(Model model,@PathVariable int id) {
-		Comment comment = new Comment();
-		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
-		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsByEmployeeId(leaveApp.get().getEmployee().getEmployeeId());
-		model.addAttribute("leaves",leaveApps);
-		model.addAttribute("leave",leaveApp.get());
-		model.addAttribute("comment", comment);
-		return "LeaveApplicationDetail";
+	public String detailLeaveApp(Model model,@PathVariable int id,HttpSession session) {
+		Employee emp = (Employee) session.getAttribute("validated");
+		if(emp == null) 
+		{
+			return "redirect:/";
+		}
+		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
+			Comment comment = new Comment();
+			Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
+			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsByEmployeeId(leaveApp.get().getEmployee().getEmployeeId());
+			model.addAttribute("leaves",leaveApps);
+			model.addAttribute("leave",leaveApp.get());
+			model.addAttribute("comment", comment);
+			return "LeaveApplicationDetail";
+		} else {
+			return "/error";
+		}
 	}
 	
 	@PostMapping("/decide/{id}")
-	public String approveLeaveApp(Model model,@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
-		List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
-		model.addAttribute("leaves",leaveApps);
-		Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
-		comment.setLeave(leaveApp.get());
-
-		if(comment.getDecision().equals("approved")) {
-			leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
-		} 
-		else if(comment.getDecision().equals("rejected")){
-			leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
+	public String approveLeaveApp(Model model,HttpSession session,@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
+		Employee emp = (Employee) session.getAttribute("validated");
+		if(emp == null) {
+			return "redirect:/";
 		}
-		commentService.saveComment(comment);
-		return "redirect:/leaves/view/all";
+		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
+			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
+			model.addAttribute("leaves",leaveApps);
+			Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
+			comment.setLeave(leaveApp.get());
+	
+			if(comment.getDecision().equals("approved")) {
+				leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
+			} 
+			else if(comment.getDecision().equals("rejected")){
+				leaveAppService.updateLeaveApplication(id,LeaveEnum.REJECTED.toString());
+			}
+			commentService.saveComment(comment);
+			return "redirect:/leaves/view/all";
+		} else {
+			return "/error";
+		}
 	}
 }
