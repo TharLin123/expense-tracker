@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+
+	<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h3>Edit Leaves Page</h3>
+	<form action="#" th:action="@{/admin/manageleave/edit/}+${employee.employeeId}" th:object="${employee}"
+		method="post">
+		<table style="border: 1;margin-left: auto; margin-right: auto;">
+			<tbody>
+				<tr>
+					<td><span th:text="#{fieldLabel.employeeId}"></span></td>
+					<td><input type="text" th:field="*{employeeId}" readonly="readonly" /></td>
+				</tr>
+
+				<tr>
+					<td><span th:text="#{fieldLabel.empName}"></span></td>
+					<td><input type="text" th:field="*{name}" readonly="readonly" /></td>
+				</tr>
+				
+				<tr>
+					<td><span th:text="annual_leaven"></span></td>
+					<td><input type="text" th:field="${employee.annualLeaveN}" /></td>
+				
+				</tr>
+
+				<tr>
+					<td><span th:text="comp_leaven"></span></td>
+					<td><input type="text" th:field="${employee.medicalLeaveN}" /></td>
+				
+				</tr>
+
+				<tr>
+					<td><span th:text="medical_leaven"></span></td>
+					<td><input type="text" th:field="${employee.compLeaveN}" /></td>
+				
+				</tr>
+				
+				<tr>
+					<td><input type="submit" value="Update" /></td>
+				</tr>
+
+
+			</tbody>
+
+		</table>
+
+
+
+	</form>
+	<div style="text-align: center;">
+		<br><br>
+		<a th:href="@{/admin/manageleave/list}" style="font-size: 15px">Back to list</a>
+	</div>
+</body>
+
+</html>

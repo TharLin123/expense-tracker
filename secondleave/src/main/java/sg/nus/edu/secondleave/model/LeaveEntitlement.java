@@ -1,5 +1,7 @@
 package sg.nus.edu.secondleave.model;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -16,6 +18,10 @@ import sg.nus.edu.secondleave.util.TypeEnum;
 @Data
 @NoArgsConstructor
 public class LeaveEntitlement {
+	//Added by kenny
+	public LeaveEntitlement(Collection<LeaveEntitlement> leaveEntitlements) {
+		// TODO Auto-generated constructor stub
+	}
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

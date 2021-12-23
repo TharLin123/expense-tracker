@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<script src="/js/jquery-1.11.3.min.js"></script>
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h2>Employee Leave History</h2>
+	<div>
+		<table style=" border: 1;" id="table">
+
+		</table>
+		<button onclick="refreshTable(1)">Previous</button><input type="text" name="page" th:value="${page}" readonly><button onclick="refreshTable(2)">Next</button>
+	</div>
+</body>
+
+<script>
+	$(function () {
+		renderTable(1);
+	})
+	function refreshTable(type) {
+		var page = $("input[name=page]").val();
+		if (type == "1") {
+			if (page == 1) {
+				return false;
+			}
+			var index = Number(page) - 1;
+			renderTable(index);
+		} else {
+			var totalPage = $("input[name=totalPage]").val();
+			if (page == totalPage) {
+				return false;
+			}
+			var index = Number(page) + 1;
+			renderTable(index);
+		}
+	}
+
+	function renderTable(page) {
+		$.get("/manager/staffList?page=" + page, function (res) {
+			$("#table").html("");
+			var str = "";
+			str += '<tr class="listHeading">\n' +
+					'\t\t\t\t<th><span>employId</span></th>\n' +
+					'\t\t\t\t<th><span>employName</span></th>\n' +
+					'\t\t\t</tr>'
+			var data = res.data;
+			$(data).each(function () {
+				str += '<tr class="listRecord">\n' +
+						'\t\t\t\t<td align="left">' + this.employeeId + '</td>\n' +
+						'\t\t\t\t<td align="left" ><a href="/employee/history?employeeId=' + this.employeeId + '">' + this.name + '</a></td>\n';
+			})
+			$("#table").html(str);
+			// 修改当前页数
+			$("input[name=page]").val(res.page);
+			$("input[name=totalPage]").val(res.totalPage);
+		})
+	}
+</script>
+</html>
+
+<!--test -->
