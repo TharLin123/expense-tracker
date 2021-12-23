@@ -13,7 +13,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,6 +31,7 @@ import sg.nus.edu.secondleave.repo.RoleRepository;
 import sg.nus.edu.secondleave.services.EmployeeService;
 import sg.nus.edu.secondleave.services.LeaveEntitlementService;
 import sg.nus.edu.secondleave.services.RoleService;
+import sg.nus.edu.secondleave.validators.employeeValidator;
 
 @Controller
 public class AdminUserController {
@@ -43,6 +46,13 @@ public class AdminUserController {
 	RoleService roleServ;
 	@Autowired
 	LeaveEntitlementService leaveServ;
+	@Autowired
+	private employeeValidator empValidator;
+
+	@InitBinder("user")
+	private void initUserBinder(WebDataBinder binder) {
+		binder.addValidators(empValidator);
+	}
 
 	@RequestMapping(value = "/admin/history")
 	public String adminpage(HttpSession session, Model model) {
@@ -53,19 +63,18 @@ public class AdminUserController {
 		}
 		return "forward:/home";
 	}
+
 	@GetMapping("/admin/create")
 	public String createUser(Model model) {
 		model.addAttribute("user", new Employee());
 		List<Employee> managerList = empServ.findAllManager();
 		List<Role> roleList = roleServ.findAll();
 		// for testing purposes can remove
-		/*for(Employee E : managerList) {
-			System.out.println(E.getName());
-		}
-		for (Role E : roleList) {
-			System.out.println(E.toString());
-		} */
-		model.addAttribute("managerlist",managerList);
+		/*
+		 * for(Employee E : managerList) { System.out.println(E.getName()); } for (Role
+		 * E : roleList) { System.out.println(E.toString()); }
+		 */
+		model.addAttribute("managerlist", managerList);
 		model.addAttribute("rolelist", roleList);
 		return "adduser";
 	}
@@ -76,7 +85,10 @@ public class AdminUserController {
 		HashSet<Role> newRoleSet = new HashSet<Role>();
 		Collection<LeaveEntitlement> entitlementCollection = new ArrayList<>();
 		if (bindingResult.hasErrors()) {
-
+			List<Employee> managerList = empServ.findAllManager();
+			List<Role> roleList = roleServ.findAll();
+			model.addAttribute("managerlist", managerList);
+			model.addAttribute("rolelist", roleList);
 			return "adduser";
 		}
 		for (Iterator<Role> iterator = user.getRoles().iterator(); iterator.hasNext();) {
@@ -84,15 +96,15 @@ public class AdminUserController {
 			Role newRole = roleRepo.findRole(type.getRoleId());
 			newRoleSet.add(newRole);
 		}
-		boolean isProfessional=empServ.checkProfessional(user);
-		entitlementCollection = leaveServ.setEntitlement(isProfessional,user);
+		boolean isProfessional = empServ.checkProfessional(user);
+		entitlementCollection = leaveServ.setEntitlement(isProfessional, user);
 		user.setRoles(newRoleSet);
 		user.setLeaveEntitlements(entitlementCollection);
 		empRepo.save(user);
-		
 
 		return "redirect:/admin/list";
 	}
+
 	/* List Users */
 	@GetMapping("/admin/list")
 	public ModelAndView employeeList() {
@@ -122,7 +134,7 @@ public class AdminUserController {
 		for (Role E : e) {
 			System.out.println(E.toString());
 		}
-		model.addAttribute("managerlist",managerList);
+		model.addAttribute("managerlist", managerList);
 		model.addAttribute("user", emp);
 		model.addAttribute("roles", e);
 		return "edituser";
