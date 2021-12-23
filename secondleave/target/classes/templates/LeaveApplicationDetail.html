@@ -16,6 +16,8 @@ function makeFieldNotRequired() {
     <title>Leave Application Detail</title>
 </head>
 <body>
+<a th:href="@{/leaves/view}">BACK TO LEAVE APPLICATIONS LIST</a> |
+<a th:href="@{/home}">HOME</a>
 	<h1>Leave Application Detail</h1>
 		<strong>Employee Name: </strong> <span th:text="${leave.employee.name}" /><br/>
 		<strong>Leave Type: </strong> <span th:text="${leave.type}" /><br/>
