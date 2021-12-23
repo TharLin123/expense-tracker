@@ -56,6 +56,13 @@
 		    <scope>provided</scope>
 		</dependency>
 
+<!-- 	this is for thymeleaf to make LocalDate -->
+		<dependency>
+		    <groupId>org.thymeleaf.extras</groupId>
+		    <artifactId>thymeleaf-extras-java8time</artifactId>
+		    <version>3.0.1.RELEASE</version>
+		</dependency>
+		
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>

@@ -1,7 +1,7 @@
 package sg.nus.edu.secondleave.util;
 
 public enum TypeEnum {
-	ANNUAL("Annual"), MEDICAL("Medical"), COMPENSATION("Compensation");
+	ANNUAL("ANNUAL"), MEDICAL("MEDICAL"), COMPENSATION("COMPENSATION");
 	
 	//Made by Xin, for fetch all leave type as a list in LeaveApplicationServiceImpl class
 	private String leaveType;

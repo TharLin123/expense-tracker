@@ -19,13 +19,13 @@
 		<fieldset>
 			<label for="fromDate">From Date: </label>
 			<input type="text" th:field="*{fromDate}" placeholder="dd/MM/yyyy"
-				th:text="${#dates.format(newLeave.fromDate,'dd/MM/yyyy')}" />
+				th:text="${#temporals.format(newLeave.fromDate,'dd/MM/yyyy')}" />
 		</fieldset>
 		<!--TO DATE-->
 		<fieldset>
 			<label for="toDate">To Date: </label>
 			<input type="text" th:field="*{toDate}" placeholder="dd-MM-yyyy"
-				th:text="${#dates.format(newLeave.toDate,'dd/MM/yyyy')}" />
+				th:text="${#temporals.format(newLeave.toDate,'dd/MM/yyyy')}" />
 		</fieldset>
 		<!--REASON-->
 		<fieldset>
@@ -35,7 +35,7 @@
 		<!--LEAVE TYPE-->
 		<fieldset>
 			<label for="type">Leave Type: </label>
-			<select th:field="*{leaveType}">
+			<select th:field="*{type}">
 
 				<option value=""> Please select your leave type</option>
 				<option th:each="leavetype:${leavetype}" th:value="${leavetype}" th:text="${leavetype}">
