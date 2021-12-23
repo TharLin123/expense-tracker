@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head th:replace="fragments/layout.html :: html_head" />
+
+<body>
+
+	<!--	here is for build the top navigation bar not complete
+	<div th:replace="fragments/layout.html :: menu"/>
+	<div th:replace="fragments/layout.html :: header"/> -->
+
+	<h3>Complete your leave form</h3>
+	<!-- here is for build the form-->
+	<form class="leaveForm" action="#" th:action="@{/employee/saveleave}" th:object="${newLeave}" method="POST">
+		<!--FROM DATE-->
+		<fieldset>
+            <input type="hidden" th:field="*{leaveAppId}"/>           
+        </fieldset>
+		<fieldset>
+			<label for="fromDate">From Date: </label>
+			<input type="text" th:field="*{fromDate}" placeholder="dd/MM/yyyy"
+				th:text="${#dates.format(newLeave.fromDate,'dd/MM/yyyy')}" />
+		</fieldset>
+		<!--TO DATE-->
+		<fieldset>
+			<label for="toDate">To Date: </label>
+			<input type="text" th:field="*{toDate}" placeholder="dd-MM-yyyy"
+				th:text="${#dates.format(newLeave.toDate,'dd/MM/yyyy')}" />
+		</fieldset>
+		<!--REASON-->
+		<fieldset>
+			<label for="reason">Reason: </label>
+			<input type="text" th:field="*{reason}" />
+		</fieldset>
+		<!--LEAVE TYPE-->
+		<fieldset>
+			<label for="type">Leave Type: </label>
+			<select th:field="*{leaveType}">
+
+				<option value=""> Please select your leave type</option>
+				<option th:each="leavetype:${leavetype}" th:value="${leavetype}" th:text="${leavetype}">
+				</option>
+
+			</select>
+		</fieldset>
+		<!--WORK DISSEMINATION-->
+		<fieldset>
+			<label for="workDissemination">Work Dissemination: </label>
+			<input type="text" th:field="*{workDissemination}" />
+		</fieldset>
+		<!--CONTACT DETAIL-->
+		<fieldset>
+			<label for="contactDetails">Contact Details: </label>
+			<input type="text" th:field="*{contactDetails}" />
+		</fieldset>
+		<!--Summit button-->
+		<input type="submit" value="show" />
+	</form>
+
+
+</body>
+
+</html>
