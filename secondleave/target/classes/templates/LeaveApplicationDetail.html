@@ -29,7 +29,7 @@ function makeFieldNotRequired() {
 		<strong>Reason: </strong> <span th:text="${leave.reason}" /><br/>
 		
 	
-	<div th:if="${#strings.equals(leave.status, 'APPLIED')}">
+	<div th:if="${#strings.equals(leave.status, 'APPLIED' ) OR #strings.equals(leave.status, 'UPDATED' )}">
 		<h3>Approve/Reject Leave</h3>
 		<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
         <p>Comment:</p>
