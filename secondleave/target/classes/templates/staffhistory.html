@@ -21,8 +21,8 @@
 			<tr th:each="leave : ${lhistory}" class="listRecord">
 				<td align="left" th:text="${leave.leaveAppId}">Id</td>
 				<td align="left" th:text="${leave.type}">Id</td>
-				<td align="left" th:text="${#dates.format(leave.fromDate, 'dd/MM/yyyy')}">From</td>
-				<td align="left" th:text="${#dates.format(leave.toDate, 'dd/MM/yyyy')}">To</td>
+				<td align="left" th:text="${#temporals.format(leave.fromDate, 'dd/MM/yyyy')}">From</td>
+				<td align="left" th:text="${#temporals.format(leave.toDate, 'dd/MM/yyyy')}">To</td>
 				<td align="left" th:text="${leave.status}">Status</td>
 
 				<td>

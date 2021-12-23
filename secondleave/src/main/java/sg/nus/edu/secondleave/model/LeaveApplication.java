@@ -1,6 +1,7 @@
 package sg.nus.edu.secondleave.model;
 
 
+import java.time.LocalDate;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -14,6 +15,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -33,32 +35,29 @@ public class LeaveApplication {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Integer leaveAppId;
 	
+	@NotNull(message="Must have a leave type!!!")
 	@Enumerated(EnumType.STRING)
 	private TypeEnum type;
 	
 	//Xin just comment this notempty for date to let the save process run
 	//if i could figure out how to validate notempty i will put it back
-	//@NotEmpty
-	@Temporal(TemporalType.DATE)
+	@NotNull(message="Must have a from date!!!")	
 	@Column(name = "fromdate")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Date fromDate;
+	private LocalDate fromDate;
 	
-	//@NotEmpty
-	@Temporal(TemporalType.DATE)
+
+	@NotNull(message="Must have a to date!!!")
 	@Column(name = "todate")
 	@DateTimeFormat(pattern = "dd/MM/yyyy")
-	private Date toDate;
+	private LocalDate toDate;
 	
 	@Enumerated(EnumType.STRING)
 	private LeaveEnum status;
 	
-	@NotEmpty
+	@NotEmpty(message="Must have your reason!!!")
 	private String reason;
-	
-	// Made By Xin, just for store the leave type value posted by the "leaveform-apply" page
-	private String leaveType;
-	
+		
 	private String workDissemination;
 	
 	private String contactDetails;
@@ -83,19 +82,19 @@ public class LeaveApplication {
 		this.type = type;
 	}
 
-	public Date getFromDate() {
+	public LocalDate getFromDate() {
 		return fromDate;
 	}
 
-	public void setFromDate(Date fromDate) {
+	public void setFromDate(LocalDate fromDate) {
 		this.fromDate = fromDate;
 	}
 
-	public Date getToDate() {
+	public LocalDate getToDate() {
 		return toDate;
 	}
 
-	public void setToDate(Date toDate) {
+	public void setToDate(LocalDate toDate) {
 		this.toDate = toDate;
 	}
 
@@ -113,14 +112,6 @@ public class LeaveApplication {
 
 	public void setReason(String reason) {
 		this.reason = reason;
-	}
-
-	public String getLeaveType() {
-		return leaveType;
-	}
-
-	public void setLeaveType(String leaveType) {
-		this.leaveType = leaveType;
 	}
 
 	public String getWorkDissemination() {
