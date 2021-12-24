@@ -27,6 +27,7 @@ import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveEntitlement;
 import sg.nus.edu.secondleave.model.Role;
 import sg.nus.edu.secondleave.repo.EmployeeRepository;
+import sg.nus.edu.secondleave.repo.LeaveApplicationRepository;
 import sg.nus.edu.secondleave.repo.RoleRepository;
 import sg.nus.edu.secondleave.services.EmployeeService;
 import sg.nus.edu.secondleave.services.LeaveEntitlementService;
@@ -46,6 +47,8 @@ public class AdminUserController {
 	RoleService roleServ;
 	@Autowired
 	LeaveEntitlementService leaveServ;
+	@Autowired
+	LeaveApplicationRepository laRepo;
 	
 	@Autowired
 	private employeeValidator empValidator;
@@ -120,7 +123,9 @@ public class AdminUserController {
 	public ModelAndView deleteEmployee(@PathVariable String id) {
 		ModelAndView mav = new ModelAndView("forward:/admin/list");
 
+		
 		Employee employee = empServ.findEmpById(Integer.parseInt(id));
+		laRepo.deleteAllInBatch(employee.getLeaves());
 		leaveServ.removeuserEnt(employee);
 		empServ.removeUser(employee);
 		System.out.println("Employee delete");
