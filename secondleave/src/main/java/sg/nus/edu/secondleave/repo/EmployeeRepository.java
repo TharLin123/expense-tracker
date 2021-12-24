@@ -42,3 +42,9 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 		public void updateCompValue(@Param("entitlementvalue") Double entitlementvalue, @Param("employeeId") Integer employeeId);
 
 }
+                @Transactional
+		@Modifying
+		@Query(value = "update employee e set e.manager_id = :manager_id, e.name = :ename,"
+				+ "e.username =:eusername, e.password = :epassword where e.employee_id = :employeeId",nativeQuery=true)
+		void updateEmpee(@Param("employeeId") Integer EmployeeId, @Param("ename") String name, @Param("eusername") String eusername,
+				 @Param("epassword") String epassword, @Param("manager_id") int manager_id);
