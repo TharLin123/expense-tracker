@@ -12,7 +12,7 @@
 		<nav class="navbar">
 			<a th:href="@{/home}">Leave Application
 				Processing System - LAPS</a>
-			<a th:href="@{/home}">Home</a>
+			<!--<a th:href="@{/home}">Home</a>-->
 			<div th:if="${session.validated != null}">
 				<div th:if="${session.admvalidated == null }" th:each="role : ${session.validated.roles}">
 					<div th:if="${role.name == 'Manager'}">

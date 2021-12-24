@@ -60,9 +60,9 @@ public class AdminUserController {
 		Employee emp = (Employee) session.getAttribute("admvalidated");
 		if (emp != null) {
 			System.out.println(emp.getName());
-			return "staffList";
+			return "redirect:/admin/list";
 		}
-		return "forward:/home";
+		return "forward:/admin";
 	}
 
 	@GetMapping("/admin/create")

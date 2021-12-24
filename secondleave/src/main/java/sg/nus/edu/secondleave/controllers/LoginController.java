@@ -60,7 +60,7 @@ public class LoginController {
 			,BindingResult bindingResult, Model model, HttpSession session) {
 
 		if(bindingResult.hasErrors()) {
-			return "adminloginfail";
+			return "adminlogin";
 		} else {
 			Employee emp = eService.authenticate(user.getUsername(),user.getPassword());
 			
