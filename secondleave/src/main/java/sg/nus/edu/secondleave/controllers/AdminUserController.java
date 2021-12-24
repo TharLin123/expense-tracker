@@ -148,10 +148,13 @@ public class AdminUserController {
 		if (bindingResult.hasErrors()) {
 			return "redirect:/admin/list";
 		}
+		Collection<LeaveEntitlement> entitlementCollection = new ArrayList<>();
+		boolean isProfessional = empServ.checkProfessional(user);
+		entitlementCollection = leaveServ.setEntitlement(isProfessional, user);
+		user.setLeaveEntitlements(entitlementCollection);
 		System.out.println("edit success");
 		empServ.editEmp(user);
-
-		return "redirect:/admin/list";
+		return "redirect:/admin/manageleave/edit/"+id;
 
 	}
 
