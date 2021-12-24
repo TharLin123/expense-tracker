@@ -14,5 +14,5 @@ public interface EmployeeService {
 	public Employee createEmp(Employee emp);
 	public Employee editEmp(Employee emp);
 	public boolean checkProfessional(Employee emp);
-
+        public void editEmp(int id, String name, String username, String password, int manager_id);
 }
