@@ -34,9 +34,11 @@ import org.supercsv.prefs.CsvPreference;
 
 import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
+import sg.nus.edu.secondleave.model.LeaveEntitlement;
 import sg.nus.edu.secondleave.model.PageResult;
 import sg.nus.edu.secondleave.model.Role;
 import sg.nus.edu.secondleave.services.EmployeeServiceImpl;
+import sg.nus.edu.secondleave.services.HolidayServiceImpl;
 import sg.nus.edu.secondleave.services.LeaveApplicationServiceImpl;
 import sg.nus.edu.secondleave.services.LeaveEntitlementServiceImpl;
 import sg.nus.edu.secondleave.util.LeaveEnum;
@@ -50,6 +52,8 @@ public class EmployeeController {
 	LeaveApplicationServiceImpl laService;
 	@Autowired
 	LeaveEntitlementServiceImpl leService;
+	@Autowired
+	HolidayServiceImpl hService;
 	
 	@Autowired
 	EmployeeServiceImpl emService;
@@ -237,8 +241,32 @@ public class EmployeeController {
 			return mvFail;
 		}
 		// if the binding success
-		//LeaveEntitlement balance = leService.
-		ModelAndView mv = new ModelAndView();
+		LeaveEntitlement leaveEntitlement = leService.findTopByEmployeeAndType(emp, leave.getType());
+		// 他对应类型假期的假期余额
+		//double balance = leaveEntitlement.getEntitlement();
+		if(!hService.isWorkingDay(leave))
+		{
+			String msg = "Pleace check your calendar to make sure the From and To date is not SG holiday or weekend!!!";
+			mvFail.addObject("errormsg", msg);
+			mvFail.addObject("leavetype", laService.findAllLeaveType());
+			mvFail.setViewName("leaveform-apply");
+			return mvFail;
+		}
+		if(!hService.isBalanceEnough(leave))
+		{
+			String errorMsg = 
+					"Your "+leaveEntitlement.getType()+
+					" Balance is Not Enought: Only "+ 
+					leaveEntitlement.getEntitlement() +" Day left.";
+			mvFail.addObject("balanceerror", errorMsg);
+			mvFail.setViewName("balance-not-enough");
+			return mvFail;
+		}
+//		Period p = Period.between(start, end);
+//		int res = p.getDays();
+		
+		int leaveDays = hService.findLeaveDaysWithoutHoliday(leave.getFromDate(), leave.getToDate());
+				
 		String message = "New leaveapplication " + leave.getType() + " was successfully created.";
 		System.out.println(message);
 
@@ -246,10 +274,10 @@ public class EmployeeController {
 
 		// 设定表单初始状态为APPLIED
 		leave.setStatus(LeaveEnum.APPLIED);
-		mv.setViewName("forward:/employee/history");
+		mvSuccess.setViewName("redirect:history");
 		// 储存该表单并重定向回仪表盘
 		laService.saveLeaveApplication(leave);
-		return mv;
+		return mvSuccess;
 	}
 	
 	@GetMapping(value = "/employee/export")

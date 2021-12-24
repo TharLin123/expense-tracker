@@ -11,7 +11,7 @@ import sg.nus.edu.secondleave.util.TypeEnum;
 
 public interface LeaveEntitlementService {
 	//to fetch his entitlement of one type of leave like annual
-	public LeaveEntitlement findByEmployAndType(Employee employee, TypeEnum leavetype);
+	public LeaveEntitlement findTopByEmployeeAndType(Employee employee, TypeEnum leavetype);
 	//to fetch his all entitlement objects with all kinds of leave type
 	public List<LeaveEntitlement> findByEmployee(Employee employee);
 	public List<LeaveEntitlement> findLeaveEntitlement();

@@ -34,7 +34,7 @@ public class LeaveEntitlementRepoTest {
 	public void testFetchLeaveEntitlement()
 	{
 		Employee targetEmp = empService.findEmpById(2);
-		LeaveEntitlement le = leRepo.findByEmployeeAndType(targetEmp, TypeEnum.ANNUAL);
+		LeaveEntitlement le = leRepo.findTopByEmployeeAndType(targetEmp, TypeEnum.ANNUAL);
 		System.out.println(le.getEntitlement());
 	}
 }

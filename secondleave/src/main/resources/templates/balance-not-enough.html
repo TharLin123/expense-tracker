@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+	<link th:href="@{/css/employeedashboard.css}" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h1 th:text="${balanceerror}"></h1>
+	
+		
+</body>
+
+</html>

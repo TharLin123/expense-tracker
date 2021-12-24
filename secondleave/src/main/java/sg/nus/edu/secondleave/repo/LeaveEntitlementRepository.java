@@ -12,6 +12,6 @@ import sg.nus.edu.secondleave.util.TypeEnum;
 
 @Repository
 public interface LeaveEntitlementRepository extends JpaRepository<LeaveEntitlement, Integer> {
-	LeaveEntitlement findByEmployeeAndType(Employee staff, TypeEnum type);
+	LeaveEntitlement findTopByEmployeeAndType(Employee emp, TypeEnum type);
 	List<LeaveEntitlement> findByEmployee(Employee emp);
 }

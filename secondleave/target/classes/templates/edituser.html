@@ -37,7 +37,7 @@
 				</tr>
 				<tr>
 					<td><label>Select Manager :</label></td>
-					<td><select size="03" name="managerId" id="managerId">
+					<td><select size="03" name="managerId" id="managerId"th:field="${user.managerId}">
 							<option th:each="manager:${managerlist}" th:value="${manager.employeeId}"
 								th:text="${manager.name}">
 								Managers</option>
@@ -68,7 +68,7 @@
 	<br><br>
 	<div style="margin: auto;width: 25%;padding: 10px;">
 
-		<p>** Please note down these existing leave entitlements before updating role**</p>
+		<p>** Please note down these existing leave entitlements before updating employee**</p>
 
 		<p>** You will be redirected to edit staff's leave entitlements for pro-rating**</p>
 	</div>

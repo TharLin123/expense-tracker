@@ -22,10 +22,10 @@ public class LeaveEntitlementServiceImpl implements LeaveEntitlementService {
 	private LeaveEntitlementRepository leaveEntitlementRepo;
 	
 	@Override
-	public LeaveEntitlement findByEmployAndType(Employee employee, TypeEnum leavetype) {
+	public LeaveEntitlement findTopByEmployeeAndType(Employee employee, TypeEnum leavetype) {
 		
 		LeaveEntitlement singleEntitlement = leaveEntitlementRepo
-				.findByEmployeeAndType(employee,leavetype);
+				.findTopByEmployeeAndType(employee,leavetype);
 		return singleEntitlement;
 	}
 

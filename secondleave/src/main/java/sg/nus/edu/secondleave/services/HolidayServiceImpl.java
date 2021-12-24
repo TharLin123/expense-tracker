@@ -83,7 +83,7 @@ public class HolidayServiceImpl implements HolidayService {
 	@Override
 	public boolean isBalanceEnough(LeaveApplication la) {
 		//this part may cause bug because of the EnumType
-		LeaveEntitlement leaveEntitlement = leRepository.findByEmployeeAndType(la.getEmployee(), 
+		LeaveEntitlement leaveEntitlement = leRepository.findTopByEmployeeAndType(la.getEmployee(), 
 				la.getType());
 		double balance = leaveEntitlement.getEntitlement();
 		int leavedays = 0;
