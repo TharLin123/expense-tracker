@@ -19,9 +19,9 @@
 						<div class="subnav">
 							<button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
 							<div class="subnav-content">
-								<a th:href="@{/leaves/view/for-approval}" th:utext="#{menu.leaveForApproval}">Pending
+								<a th:href="@{/manager/pending}" th:utext="#{menu.leaveForApproval}">Pending
 									Approvals</a>
-								<a th:href="@{/leaves/view/all}" th:utext="#{menu.leavehistory}">Subordinate
+								<a th:href="@{/manager/staffListView}" th:utext="#{menu.leavehistory}">Subordinate
 									History</a>
 							</div>
 						</div>
@@ -30,7 +30,7 @@
 						<div class="subnav">
 							<button class="subnavbtn">Employee Menu <i class="fa fa-caret-down"></i></button>
 							<div class="subnav-content">
-								<a th:href="@{/staff/history}" th:utext="#{menu.empHistory}">Leave History</a>
+								<a th:href="@{/employee/history}" th:utext="#{menu.empHistory}">Leave History</a>
 								<a th:href="@{/employee/applyleave}" th:utext="#{menu.empApply}">Apply Leave</a>
 								<a th:href="@{/staff/logout}" th:utext="#{menu.empCompensation}">Claim Compensation</a>
 							</div>

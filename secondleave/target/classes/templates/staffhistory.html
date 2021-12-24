@@ -40,7 +40,14 @@
 				</td>
 			</tr>
 		</table>
+		<p></p>
+		<p></p>
 		<button onclick="refreshTable(1)">Previous</button><input type="text" name="page" th:value="${page}" readonly><button onclick="refreshTable(2)">Next</button>
+		<pp></p>
+		<div 
+			th:if="${isManager == 1}">
+			<a th:href="@{/employee/export}">Export to CSV</a>
+		</div >
 	</div>
 <input type="hidden" name="totalPage" th:value="${totalPage}">
 </body>
