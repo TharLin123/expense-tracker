@@ -19,10 +19,12 @@
 						<div class="subnav">
 							<button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
 							<div class="subnav-content">
-								<a th:href="@{/manager/pending}" th:utext="#{menu.leaveForApproval}">Pending
+								<a th:href="@{/leaves/view/for-approval}" th:utext="#{menu.leaveForApproval}">Pending
 									Approvals</a>
 								<a th:href="@{/manager/staffListView}" th:utext="#{menu.leavehistory}">Subordinate
 									History</a>
+								<a th:href="@{/leaves/view/all}" th:utext="#{menu.leavehistory}">All Leaves
+								</a>
 							</div>
 						</div>
 					</div>
