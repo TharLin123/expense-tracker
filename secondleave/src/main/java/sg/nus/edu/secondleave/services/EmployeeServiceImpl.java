@@ -93,5 +93,10 @@ public class EmployeeServiceImpl implements EmployeeService {
 		}
 		return roleProfessional;
 	}
-	
+
+	@Override
+	@Transactional
+	public void editEmp(int id, String name, String username, String password, int manager_id) {
+		employeeRepo.updateEmpee(id,name,username,password,manager_id);
+	}
 }
