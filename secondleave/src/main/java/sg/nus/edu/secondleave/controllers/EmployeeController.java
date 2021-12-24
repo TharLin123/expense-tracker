@@ -254,10 +254,13 @@ public class EmployeeController {
 		}
 		if(!hService.isBalanceEnough(leave))
 		{
+			List<LeaveEntitlement> entitlements = leService.findByEmployee(emp);
+			
 			String errorMsg = 
-					"Your "+leaveEntitlement.getType()+
+					"Submit Fail! Your "+leaveEntitlement.getType()+
 					" Balance is Not Enought: Only "+ 
 					leaveEntitlement.getEntitlement() +" Day left.";
+			mvFail.addObject("entitlements", entitlements);
 			mvFail.addObject("balanceerror", errorMsg);
 			mvFail.setViewName("balance-not-enough");
 			return mvFail;

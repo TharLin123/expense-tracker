@@ -9,7 +9,10 @@
 	<div th:replace="fragments/layout.html :: menu"/>
 	<div th:replace="fragments/layout.html :: header"/>
 
-	<h3>Complete your leave form</h3>
+	<h1>Complete your leave form</h1>
+	<div th:if="${errormsg} ne null">
+		<h2 th:text="${errormsg}"></h2>
+	</div >
 	<!-- here is for build the form-->
 	<form class="leaveForm" action="#" th:action="@{/employee/saveleave}" th:object="${newLeave}" method="POST">
 		<!--FROM DATE-->
@@ -58,7 +61,7 @@
 			<input type="text" th:field="*{contactDetails}" />
 		</fieldset>
 		<!--Summit button-->
-		<input type="submit" value="show" />
+		<input type="submit" value="SUBMIT" />
 	</form>
 
 
