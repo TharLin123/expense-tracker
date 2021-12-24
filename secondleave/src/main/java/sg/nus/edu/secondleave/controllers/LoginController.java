@@ -70,7 +70,7 @@ public class LoginController {
 			} 
 					
 			session.setAttribute("admvalidated", emp);
-			return "forward:/admin/list";
+			return "forward:/admin/history";
 		}
 	}
 	
