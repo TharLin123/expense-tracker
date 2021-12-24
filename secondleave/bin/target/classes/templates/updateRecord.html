@@ -35,7 +35,7 @@
 				<tr>
 					<td><label >Leave Type: </label></td>
 					<td><select name="type">
-						<option value=""> Please select your leave type</option>
+						<option value="" disabled="disabled"> Please select your leave type</option>
 						<option th:each="leaveType:${leaveTypeList}" th:selected="${leaveApplication.type eq leaveType}" th:value="${leaveType}" th:text="${leaveType}">
 						</option>
 					</select></td>
