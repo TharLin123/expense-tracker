@@ -1,7 +1,5 @@
 package sg.nus.edu.secondleave.controllers;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -9,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -48,16 +46,20 @@ public class LeaveApplicationController {
 
 	}
 
-	@RequestMapping("/view/all")
-	public String viewAllLeaveApps(Model model, HttpSession session) {
+	@RequestMapping("/view/all/{pageNum}")
+	public String viewAllLeaveApps(Model model, HttpSession session,@PathVariable(name = "pageNum") int pageNum) {
 		Employee emp = (Employee) session.getAttribute("validated");
 		if(emp == null) {
 			return "redirect:/";
 		}
 		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
-			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
+			Page<LeaveApplication> page = leaveAppService.findLeaveApplications(pageNum);
+			List<LeaveApplication> leaveApps = page.getContent();
 			model.addAttribute("leaves",leaveApps);
 			model.addAttribute("type","all");
+			model.addAttribute("currentPage", pageNum);
+		    model.addAttribute("totalPages", page.getTotalPages());
+		    model.addAttribute("totalItems", page.getTotalElements());
 			return "LeaveApplicationView";
 		} else {
 			return "/error";
@@ -75,7 +77,7 @@ public class LeaveApplicationController {
 			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplicationsForApproval();
 			model.addAttribute("leaves",leaveApps);
 			model.addAttribute("type","pending");
-			return "LeaveApplicationView";
+			return "LeaveApplicationApprovalView";
 		} else {
 			return "/error";
 		}

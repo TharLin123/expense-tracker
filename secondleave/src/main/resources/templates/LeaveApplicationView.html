@@ -42,6 +42,19 @@
             </td>
         </tr>
     </tbody>
-</table>
+</table><br/>
+<a th:if="${currentPage > 1}" th:href="@{'/leaves/view/all/1'}">First</a>
+<span th:unless="${currentPage > 1}">First</span>
+<a th:if="${currentPage > 1}" th:href="@{'/leaves/view/all/' + ${currentPage - 1}}">Previous</a>
+<span th:unless="${currentPage > 1}">Previous</span>
+<span th:each="i: ${#numbers.sequence(1, totalPages)}">
+    <a th:if="${currentPage != i}" th:href="@{'/leaves/view/all/' + ${i}}">[[${i}]]</a>
+    <span th:unless="${currentPage != i}">[[${i}]]</span>
+    &nbsp;
+</span>
+<a th:if="${currentPage < totalPages}" th:href="@{'/leaves/view/all/' + ${currentPage + 1}}">Next</a>
+<span th:unless="${currentPage < totalPages}">Next</span> -->
+<a th:if="${currentPage < totalPages}" th:href="@{'/leaves/view/all/' + ${totalPages}}">Last</a>
+<span th:unless="${currentPage < totalPages}">Last</span>
 </body>
 </html>

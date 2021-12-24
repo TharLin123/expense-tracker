@@ -3,6 +3,8 @@ package sg.nus.edu.secondleave.services;
 import java.util.List;
 import java.util.Optional;
 
+import org.springframework.data.domain.Page;
+
 import sg.nus.edu.secondleave.model.Employee;
 import sg.nus.edu.secondleave.model.LeaveApplication;
 
@@ -11,8 +13,6 @@ public interface LeaveApplicationService {
 	public List<LeaveApplication> findLeaveApplications();
 	
 	public List<LeaveApplication> findLeaveApplicationsForApproval();
-	
-	public List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id);
 	
 	public Optional<LeaveApplication> getLeaveApplication(int id);
 	
@@ -29,4 +29,8 @@ public interface LeaveApplicationService {
 	void updateLeaveApplication(LeaveApplication leaveApplication);
 
 	List<LeaveApplication> listAll();
+
+	Page<LeaveApplication> findLeaveApplications(int pageNum);
+
+	List<LeaveApplication> findLeaveApplicationsByEmployeeId(int id);
 }

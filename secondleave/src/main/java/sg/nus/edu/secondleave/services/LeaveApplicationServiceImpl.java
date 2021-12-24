@@ -8,6 +8,9 @@ import java.util.stream.Stream;
 import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import sg.nus.edu.secondleave.model.Employee;
@@ -28,13 +31,21 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 	@Override
 	@Transactional
 	public List<LeaveApplication> findLeaveApplications() {
-		return leaveAppRepo.findAll();
+		return (List<LeaveApplication>) leaveAppRepo.findAll();
 	}
 
 	@Override
 	@Transactional
 	public Optional<LeaveApplication> getLeaveApplication(int id) {
 		return leaveAppRepo.findById(id);
+	}
+	
+	@Override
+	@Transactional
+	public Page<LeaveApplication> findLeaveApplications(int pageNum) {
+	    int pageSize = 5;
+	    Pageable pageable = PageRequest.of(pageNum - 1, pageSize);
+	    return leaveAppRepo.findAll(pageable);
 	}
 
 	@Override
@@ -77,12 +88,12 @@ public class LeaveApplicationServiceImpl implements LeaveApplicationService {
 
 	@Override
 	public List<LeaveApplication> findLeaveApplicationsForApproval() {
-		return leaveAppRepo.findLapForApproval();
+	    return leaveAppRepo.findLapForApproval();	
 	}
 	
 	@Override
 	public List<LeaveApplication> listAll(){
-		return leaveAppRepo.findAll();
+		return (List<LeaveApplication>) leaveAppRepo.findAll();
 	}
 	
 }
