@@ -1,25 +1,25 @@
 package sg.nus.edu.secondleave.controllers;
 
-import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Optional;
-import java.util.prefs.Preferences;
 
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.supercsv.io.CsvBeanWriter;
-import org.supercsv.io.ICsvBeanWriter;
-import org.supercsv.prefs.CsvPreference;
 
 import sg.nus.edu.secondleave.model.Comment;
 import sg.nus.edu.secondleave.model.Employee;
@@ -27,6 +27,7 @@ import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.services.CommentService;
 import sg.nus.edu.secondleave.services.LeaveApplicationService;
 import sg.nus.edu.secondleave.util.LeaveEnum;
+import sg.nus.edu.secondleave.validators.CommentValidator;
 
 @Controller
 @RequestMapping("/leaves")
@@ -38,6 +39,14 @@ public class LeaveApplicationController {
 	@Autowired
 	CommentService commentService;
 	
+	@Autowired
+	CommentValidator commentValidator;
+	
+	@InitBinder("comment")
+	private void initLeaveBinder(WebDataBinder binder) {
+		binder.addValidators(commentValidator);
+
+	}
 
 	@RequestMapping("/view/all")
 	public String viewAllLeaveApps(Model model, HttpSession session) {
@@ -93,17 +102,25 @@ public class LeaveApplicationController {
 	}
 	
 	@PostMapping("/decide/{id}")
-	public String approveLeaveApp(Model model,HttpSession session,@ModelAttribute("comment") @Valid Comment comment,@PathVariable int id) {
+	public String approveLeaveApp(Model model,HttpSession session,@ModelAttribute("comment") @Valid Comment comment
+			,BindingResult result,@PathVariable int id) {
+		
 		Employee emp = (Employee) session.getAttribute("validated");
 		if(emp == null) {
 			return "redirect:/";
 		}
+		System.out.println(result);
 		if(emp.getRoles().stream().anyMatch(x->x.getName().equals("Manager"))) {
 			List<LeaveApplication> leaveApps = leaveAppService.findLeaveApplications();
 			model.addAttribute("leaves",leaveApps);
 			Optional<LeaveApplication> leaveApp = leaveAppService.getLeaveApplication(id);
 			comment.setLeave(leaveApp.get());
-	
+			if (result.hasErrors()) {
+				
+				model.addAttribute("leave",leaveApp.get());
+				model.addAttribute("comment", comment);
+	            return "LeaveApplicationDetail";
+	        }
 			if(comment.getDecision().equals("approved")) {
 				leaveAppService.updateLeaveApplication(id,LeaveEnum.APPROVED.toString());
 			} 
