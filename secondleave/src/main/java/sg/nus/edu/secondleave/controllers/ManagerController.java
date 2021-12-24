@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import sg.nus.edu.secondleave.model.Employee;
+import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.model.PageResult;
 import sg.nus.edu.secondleave.services.EmployeeService;
 
@@ -44,6 +45,12 @@ public class ManagerController {
         }
         List<Employee> newList;
         if (staffList.size() > 0) {
+        	 for (Employee e : allEmployees) {
+        		 for(LeaveApplication leaves:e.getLeaves())
+        		 {
+        			 leaves.setEmployee(null);
+        		 }
+        	 }
             if (staffList.size() > page * size) {
                 newList = staffList.subList((page - 1) * size, page * size);
             } else {
