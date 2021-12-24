@@ -164,4 +164,20 @@ public class AdminUserController {
 
 	}
 
+	@RequestMapping(value = "/admin/edituser/{id}", method = RequestMethod.POST)
+	public String editUser(@ModelAttribute @Valid Employee user, BindingResult bindingResult, Model model,
+			@PathVariable int id) {
+
+		if (bindingResult.hasErrors()) {
+			return "redirect:/admin/list";
+		}
+//		Collection<LeaveEntitlement> entitlementCollection = new ArrayList<>();
+//		boolean isProfessional = empServ.checkProfessional(user);
+//		entitlementCollection = leaveServ.setEntitlement(isProfessional, user);
+//		user.setLeaveEntitlements(entitlementCollection);
+		System.out.println("edit success");
+		empServ.editEmp(id,user.getName(), user.getUsername(), user.getPassword(),user.getManagerId());
+		return "redirect:/admin/list";
+	}
+
 }
