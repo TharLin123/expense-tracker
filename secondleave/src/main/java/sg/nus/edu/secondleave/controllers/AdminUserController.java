@@ -125,7 +125,7 @@ public class AdminUserController {
 
 		
 		Employee employee = empServ.findEmpById(Integer.parseInt(id));
-		laRepo.deleteAllInBatch(employee.getLeaves());
+		laRepo.deleteAll(employee.getLeaves());
 		leaveServ.removeuserEnt(employee);
 		empServ.removeUser(employee);
 		System.out.println("Employee delete");
