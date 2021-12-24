@@ -21,19 +21,28 @@ public class LoginController {
 	
 	
 	@RequestMapping(value="/")
-	public String standard(Model model) {
+	public String standard(Model model, HttpSession session) {
+		if(session.getAttribute("validated") != null || session.getAttribute("admvalidated") !=null) {
+			return "defaultpage";
+		}
 		model.addAttribute("user", new User());
 		return "login";
 	}
 	
 	@RequestMapping(value="/home")
-	public String home(Model model) {
+	public String home(Model model, HttpSession session) {
+		if(session.getAttribute("validated") != null || session.getAttribute("admvalidated") !=null) {
+			return "defaultpage";
+		}
 		model.addAttribute("user", new User());
 		return "login";
 	}
 	
 	@RequestMapping(value="/admin")
-	public String admin(Model model) {
+	public String admin(Model model, HttpSession session) {
+		if(session.getAttribute("validated") != null || session.getAttribute("admvalidated") !=null) {
+			return "defaultpage";
+		}
 		model.addAttribute("user", new User());
 		return "adminlogin";
 	}
