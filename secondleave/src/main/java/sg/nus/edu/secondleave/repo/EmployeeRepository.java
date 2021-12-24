@@ -29,16 +29,16 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 		@Transactional
 		@Modifying
 		@Query(value = "update leave_entitlement set entitlement = :entitlementvalue where type = 'ANNUAL' and employee_employee_id = :employeeId",nativeQuery=true)
-		public void updateAnnualValue(@Param("entitlementvalue") Integer entitlementvalue, @Param("employeeId") Integer employeeId);
+		public void updateAnnualValue(@Param("entitlementvalue") Double entitlementvalue, @Param("employeeId") Integer employeeId);
 
 		@Transactional
 		@Modifying
 		@Query(value = "update leave_entitlement set entitlement = :entitlementvalue where type = 'MEDICAL' and employee_employee_id = :employeeId",nativeQuery=true)
-		public void updateMedicalValue(@Param("entitlementvalue") Integer entitlementvalue, @Param("employeeId") Integer employeeId);
+		public void updateMedicalValue(@Param("entitlementvalue") Double entitlementvalue, @Param("employeeId") Integer employeeId);
 		
 		@Transactional
 		@Modifying
 		@Query(value = "update leave_entitlement set entitlement = :entitlementvalue where type = 'COMPENSATION' and employee_employee_id = :employeeId",nativeQuery=true)
-		public void updateCompValue(@Param("entitlementvalue") Integer entitlementvalue, @Param("employeeId") Integer employeeId);
+		public void updateCompValue(@Param("entitlementvalue") Double entitlementvalue, @Param("employeeId") Integer employeeId);
 
 }

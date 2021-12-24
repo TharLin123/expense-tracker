@@ -7,11 +7,11 @@ public class EmployeeInfo {
 	private Integer employeeId;
 	private String name;
 	private String username;
-	private Integer annualLeaveN;
-	private Integer medicalLeaveN;
-	private Integer compLeaveN;
-	public EmployeeInfo(Integer employeeId, String name, String username, Integer annualLeaveN, Integer medicalLeaveN,
-			Integer compLeaveN) {
+	private Double annualLeaveN;
+	private Double medicalLeaveN;
+	private Double compLeaveN;
+	public EmployeeInfo(Integer employeeId, String name, String username, Double annualLeaveN, Double medicalLeaveN,
+			Double compLeaveN) {
 		super();
 		this.employeeId = employeeId;
 		this.name = name;

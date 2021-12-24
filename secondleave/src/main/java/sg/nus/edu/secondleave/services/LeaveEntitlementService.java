@@ -19,6 +19,8 @@ public interface LeaveEntitlementService {
 	public LeaveEntitlement createLeaveEntitlement(LeaveEntitlement LeaveEnt);
 	public LeaveEntitlement editLeaveEntitlement(LeaveEntitlement LeaveEnt);
 	public Collection<LeaveEntitlement> setEntitlement(boolean isEmpProfessional,Employee emp);
+	public void removeuserEnt(Employee employee);
+	
 
 	
 
