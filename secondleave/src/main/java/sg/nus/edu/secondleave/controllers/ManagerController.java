@@ -1,18 +1,20 @@
 package sg.nus.edu.secondleave.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+
 import sg.nus.edu.secondleave.model.Employee;
-import sg.nus.edu.secondleave.model.LeaveApplication;
 import sg.nus.edu.secondleave.model.PageResult;
 import sg.nus.edu.secondleave.services.EmployeeService;
-
-import javax.annotation.Resource;
-import java.util.ArrayList;
-import java.util.List;
 
 @Controller
 @RequestMapping("manager")
@@ -30,11 +32,13 @@ public class ManagerController {
     @ResponseBody
     public PageResult staffList(Model model,
                                 @RequestParam(required = false, defaultValue = "1") int page,
-                                @RequestParam(required = false, defaultValue = "10") int size) {
+                                @RequestParam(required = false, defaultValue = "10") int size, HttpServletRequest request) {
         List<Employee> allEmployees = employeeService.findAllEmployees();
+        Employee emp = (Employee) request.getSession().getAttribute("validated");
         List<Employee> staffList = new ArrayList<>();
         for (Employee e : allEmployees) {
-            if (e.getManagerId() != null) {
+        	e.setLeaveEntitlements(null);
+            if (e.getManagerId() != null && e.getManagerId() == emp.getEmployeeId()) {
                 staffList.add(e);
             }
         }

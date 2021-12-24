@@ -324,9 +324,7 @@ hr {
 .subnav-content {
   display: none;
   position: absolute;
-  left: 0;
   background-color: #333;
-  width: 100%;
   z-index: 1;
 }
 

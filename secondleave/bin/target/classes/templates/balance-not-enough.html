@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="fragments/layout.html :: html_head" />
+	<link th:href="@{/css/employeedashboard.css}" rel="stylesheet" />
+</head>
+<body>
+	<div th:replace="fragments/layout.html :: menu" />
+	<div th:replace="fragments/layout.html :: header" />
+	<h1 th:text="${balanceerror}"></h1>
+	<table class="framed" th:object="${entitlements}">
+			<tr>
+				<th>Leave Type</th>
+				<th>Entitlement</th>
+			</tr>
+			<tr th:each="entitlement : ${entitlements}" class="listRecord">
+				<td align="center" th:text="${entitlement.type}"></td>
+				<td align="left" th:text="${entitlement.entitlement}"></td>
+
+			</tr>
+	</table>
+	<a th:href="@{/employee/applyleave}">
+		Apply Leave Again
+	</a>
+		
+</body>
+
+</html>

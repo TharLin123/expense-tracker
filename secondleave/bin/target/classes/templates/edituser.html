@@ -37,23 +37,46 @@
 				</tr>
 				<tr>
 					<td><label>Select Manager :</label></td>
-					<td><select size="03" name="managerId" id="managerId">
+					<td><select size="03" name="managerId" id="managerId"th:field="${user.managerId}">
 							<option th:each="manager:${managerlist}" th:value="${manager.employeeId}"
 								th:text="${manager.name}">
 								Managers</option>
 						</select></td>
 				</tr>
+				<br>
+				<tr>
+				<br>
+					<td>
+						<p th:each="leaveentitlement : ${user.leaveEntitlements}">
+							<span th:text="${leaveentitlement.type}">Type</span>
+						</p>
+					</td>
+					<td>
+						<p th:each="leaveentitlement : ${user.leaveEntitlements}">
+							<span th:text="${leaveentitlement.entitlement}">Days</span>
+						</p>
+					</td>
+				</tr>
+				<br>
 				<tr>
 					<td><input type="submit" value="Update" /></td>
 				</tr>
-			</tbody>			
-		</table >
+			</tbody>
+		</table>
 
 	</form>
+	<br><br>
+	<div style="margin: auto;width: 25%;padding: 10px;">
+
+		<p>** Please note down these existing leave entitlements before updating employee**</p>
+
+		<p>** You will be redirected to edit staff's leave entitlements for pro-rating**</p>
+	</div>
+
 	<div style="text-align: center;">
-						<br><br>
-					<a th:href="@{/admin/list}" style="font-size: 15px">Back to list</a>
-	</div >
+		<br><br>
+		<a th:href="@{/admin/list}" style="font-size: 15px">Back to list</a>
+	</div>
 </body>
 
 </html>

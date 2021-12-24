@@ -35,13 +35,15 @@ function makeFieldNotRequired() {
 		<h3>Approve/Reject Leave</h3>
 		<form th:action="@{/leaves/decide/}+${leave.leaveAppId}" method="post" th:object="${comment}">
         <p>Comment:</p>
-         	<textarea type="text" id="message" th:field="*{message}" required="false"></textarea><br/> 
+         	<textarea type="text" id="message" th:field="*{message}"></textarea><br/> 
+         	<p th:if"${#fields.hasErrors('message')}" th:errors="*{message}" style="color: red"></p>
          	
-         	<input type="radio" onClick="makeFieldNotRequired()" name="approve" value="approved" th:field="*{decision}" required>
+         	<input type="radio" name="approve" value="approved" th:field="*{decision}">
             <label for="approve">Approve</label>
             
-            <input type="radio" onClick="makeFieldRequired()" name="reject"  value="rejected" th:field="*{decision}" required>
+            <input type="radio" name="reject"  value="rejected" th:field="*{decision}">
             <label for="reject">Reject</label>
+            <p th:if"${#fields.hasErrors('decision')}" th:errors="*{decision}" style="color: red"></p>
             
         	<input type="submit" value="Confirm" />
     </form>

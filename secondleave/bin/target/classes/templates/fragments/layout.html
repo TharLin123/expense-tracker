@@ -12,17 +12,18 @@
 		<nav class="navbar">
 			<a th:href="@{/home}">Leave Application
 				Processing System - LAPS</a>
-			<a th:href="@{/home}">Home</a>
+			<!--<a th:href="@{/home}">Home</a>-->
 			<div th:if="${session.validated != null}">
 				<div th:if="${session.admvalidated == null }" th:each="role : ${session.validated.roles}">
 					<div th:if="${role.name == 'Manager'}">
 						<div class="subnav">
 							<button class="subnavbtn">Manager Menu <i class="fa fa-caret-down"></i></button>
 							<div class="subnav-content">
-								<a th:href="@{/manager/pending}" th:utext="#{menu.leaveForApproval}">Pending
+								<a th:href="@{/leaves/view/for-approval}" th:utext="#{menu.leaveForApproval}">Pending
 									Approvals</a>
 								<a th:href="@{/manager/staffListView}" th:utext="#{menu.leavehistory}">Subordinate
 									History</a>
+								<a th:href="@{/leaves/view/all}">All Leaves</a>
 							</div>
 						</div>
 					</div>
@@ -30,9 +31,9 @@
 						<div class="subnav">
 							<button class="subnavbtn">Employee Menu <i class="fa fa-caret-down"></i></button>
 							<div class="subnav-content">
-								<a th:href="@{/employee/history}" th:utext="#{menu.empHistory}">Leave History</a>
+								<a th:href="@{/employee/history}" th:utext="#{menu.empHistory}">Leave History</a>	
 								<a th:href="@{/employee/applyleave}" th:utext="#{menu.empApply}">Apply Leave</a>
-								<a th:href="@{/staff/logout}" th:utext="#{menu.empCompensation}">Claim Compensation</a>
+								<!--<a th:href="@{/staff/logout}" th:utext="#{menu.empCompensation}">Claim Compensation</a>-->		
 							</div>
 						</div>
 					</div>
@@ -43,9 +44,9 @@
 					<button class="subnavbtn">Admin Menu <i class="fa fa-caret-down"></i></button>
 					<div class="subnav-content">
 						<a th:href="@{/admin/list}" th:utext="#{menu.adminManageStaff}">Manage Staff</a>
-						<a th:href="@{/manager/shistory}" th:utext="#{menu.adminLeaveEntitlement}">Manage Leave
+						
+						<a th:href="@{/admin/manageleave/list}" th:utext="#{menu.adminLeaveEntitlement}">Manage Leave
 							Entitlement</a>
-						<a th:href="@{/manager/pending}" th:utext="#{menu.adminLeaveType}">Manage Leave Type</a>
 					</div>
 				</div>
 			</div>
