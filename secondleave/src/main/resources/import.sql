@@ -20,13 +20,16 @@ INSERT INTO `leave_application` (`leave_app_id`,`fromdate`,`status`,`todate`,`ty
 
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (1,'ANNUAL',18);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (1,'MEDICAL',60);
-INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (1,'ANNUAL',0);
-INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (2,'COMPENSATION',18);
+INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (1,'COMPENSATION',0);
+
+INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (2,'ANNUAL',18);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (2,'MEDICAL',50);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (2,'COMPENSATION',0);
+
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (3,'ANNUAL',14);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (3,'MEDICAL',30);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (3,'COMPENSATION',0);
+
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (4,'ANNUAL',18);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (4,'MEDICAL',5);
 INSERT INTO leave_entitlement (employee_employee_id,type,entitlement) VALUES (4,'COMPENSATION',20);
