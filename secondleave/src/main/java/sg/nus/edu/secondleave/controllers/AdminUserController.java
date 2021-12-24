@@ -121,6 +121,7 @@ public class AdminUserController {
 		ModelAndView mav = new ModelAndView("forward:/admin/list");
 
 		Employee employee = empServ.findEmpById(Integer.parseInt(id));
+		leaveServ.removeuserEnt(employee);
 		empServ.removeUser(employee);
 		System.out.println("Employee delete");
 		return mav;

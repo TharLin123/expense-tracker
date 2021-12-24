@@ -100,6 +100,10 @@ public class LeaveEntitlementServiceImpl implements LeaveEntitlementService {
 		}
 		return entitlementCollection;
 	}
+	public void removeuserEnt(Employee employee)
+	{
+		leaveEntitlementRepo.deleteAllInBatch(employee.getLeaveEntitlements());
+	}
 	
 	
 }
