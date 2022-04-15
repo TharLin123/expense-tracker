@@ -49,6 +49,5 @@ const dispatchToProps = dispatch => {
 }
 
 const ReduxApp = connect(stateToProps, dispatchToProps)(App); 
-console.log(ReduxApp)
 export default ReduxApp;
 

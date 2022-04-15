@@ -4,6 +4,7 @@ import {Grid} from '@material-ui/core';
 import Main from './components/main/Main';
 
 const App = () => {
+    console.log("helolo")
     return (
         <div>
             <Grid container spacing={2} alignItems="center" justify="center" style={{height:'100vh'}}>

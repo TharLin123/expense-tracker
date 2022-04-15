@@ -15,7 +15,7 @@ const Main = (props) => {
             <CardContent> 
             <Typography align="center" variant="h5">{`Total Balance $${balance}`}</Typography>
             <Typography variant="subtitle1" style={{ lineHeight: '1.5em', marginTop: '20px'}}>
-                Try Saying: Add income for $100 in category slary for Monday ....
+                Add income for $100 in category salary for Monday ....
             </Typography>
 
             </CardContent>
